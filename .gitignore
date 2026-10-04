@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.venv/
+.lake/
+*.aux
+*.out
+*.toc
+*.blg
+*.bbl
+paper/main.pdf

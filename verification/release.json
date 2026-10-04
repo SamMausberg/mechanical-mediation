@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-04",
+  "command": "make reproduce",
+  "exit_code": 0,
+  "python": "3.12.3",
+  "pdflatex": "1.40.25 (TeX Live 2023/Debian)",
+  "checks": "57 unit tests and both outward-arithmetic interval checks passed.",
+  "latex_final_diagnostics": [],
+  "final_pdf": "paper/mechanical_mediation.pdf",
+  "final_pdf_sha256": "fbd70e7e6aacdf72cff54e7e9d04a572a716e21ee895e0aa3189045ad9597cb1",
+  "supplied_final_pdf_preserved": true,
+  "final_pdf_matches_bundled_source": false,
+  "lean_sources": 0,
+  "scope": "Bundled-source compilation and supplied finite checks; not a formal verification of the final manuscript."
+}

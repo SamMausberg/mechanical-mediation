@@ -1,0 +1,13 @@
+python3 code/calculate.py > results/calculation.log
+python3 -m unittest discover -s code -p 'test_*.py' -v > results/tests.log 2>&1
+
+----------------------------------------------------------------------
+Ran 57 tests in 3.979s
+
+OK
+python3 code/design_interval.py > results/design_interval.log
+python3 code/interval_check.py > results/null_interval.log
+PASS: all outward-rounded manuscript design inequalities
+Synchronized phase: [-0.00120439161440293970153432726684537651023374243532494700393520874532408399237, -0.00120439161440293970153432726684537651023374243532494700393520375077485580231]
+./build.sh
+PASS: paper/main.pdf compiled without warnings or box errors.

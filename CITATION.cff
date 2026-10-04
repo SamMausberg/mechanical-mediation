@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "Please cite the manuscript and identify the repository commit used."
+type: software
+title: "Mechanical mediation through shared apparatus in gravitational-entanglement experiments"
+authors:
+  - family-names: Mausberg
+    given-names: Samuel
+date-released: "2026-10-04"
+repository-code: "https://github.com/SamMausberg/mechanical-mediation"
+url: "https://github.com/SamMausberg/mechanical-mediation"
+license: MIT
+license-url: "https://github.com/SamMausberg/mechanical-mediation/blob/main/LICENSE"
+preferred-citation:
+  type: unpublished
+  title: "Mechanical mediation through shared apparatus in gravitational-entanglement experiments"
+  authors:
+    - family-names: Mausberg
+      given-names: Samuel
+  year: 2026
+  license: CC-BY-4.0
+  url: "https://github.com/SamMausberg/mechanical-mediation/blob/main/paper/mechanical_mediation.pdf"
+  notes: "Research manuscript. Identify the repository commit used."
