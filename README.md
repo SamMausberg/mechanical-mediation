@@ -1,7 +1,7 @@
 # Mechanical mediation through shared apparatus in gravitational-entanglement experiments
 
-Read the [final manuscript](paper/mechanical_mediation.pdf). This is an unpublished research
-manuscript, released with its calculations and supporting material.
+Read the [final manuscript](paper/mechanical_mediation.pdf). This research manuscript is
+published on [Zenodo](https://doi.org/10.5281/zenodo.23245274), released with its calculations and supporting material.
 
 ## Release and verification
 

@@ -11,7 +11,9 @@ url: "https://github.com/SamMausberg/mechanical-mediation"
 license: MIT
 license-url: "https://github.com/SamMausberg/mechanical-mediation/blob/main/LICENSE"
 preferred-citation:
-  type: unpublished
+  type: article
+  status: preprint
+  doi: "10.5281/zenodo.23245274"
   title: "Mechanical mediation through shared apparatus in gravitational-entanglement experiments"
   authors:
     - family-names: Mausberg
