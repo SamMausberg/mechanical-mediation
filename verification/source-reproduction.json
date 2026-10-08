@@ -1,0 +1,93 @@
+{
+  "date": "2026-10-08",
+  "command": "./build.sh (fresh validation copy, three pdflatex passes)",
+  "exit_code": 0,
+  "pdflatex": "pdfTeX 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian)",
+  "source_files_sha256": {
+    "main.tex": "4e2ee50a0799bfb72c986a16b5002aac3a0d9edb1e773a9f1d40c88e1327b28b",
+    "appendices.tex": "4a8af97d2783204cd6e3885a3ce32412730c1f6bdde9bb91b9e83f157d613876",
+    "compliance.dat": "33bf2f90de60758a067928bf29f665ff386b3b5b559851b0684a6b920c8ee14d",
+    "null_pulses.dat": "4ef84f7e4ca8e6199b1bc72cb8547d09002fe9683e7062d75b0e8961b6a6f8e7"
+  },
+  "expanded_source_matches_published_manuscript_source": true,
+  "published_doi": "10.5281/zenodo.23245274",
+  "published_pdf": "paper/mechanical_mediation.pdf",
+  "published_pdf_sha256": "f3043de70661f4b5ab97daf24ff4eb615c5371082c3e884d5fa6ab8b277d82b7",
+  "published_pdf_unchanged": true,
+  "rebuilt_pdf": "paper/main.pdf",
+  "rebuilt_pdf_sha256": "a9ba69e58496139bb0227acf65c8783ee27ac8dff1bc66b12bacb52be3c61a76",
+  "pages": 13,
+  "page_comparison": [
+    {
+      "page": 1,
+      "normalized_text_identical": true,
+      "pixels_identical_at_144_dpi": true
+    },
+    {
+      "page": 2,
+      "normalized_text_identical": true,
+      "pixels_identical_at_144_dpi": true
+    },
+    {
+      "page": 3,
+      "normalized_text_identical": true,
+      "pixels_identical_at_144_dpi": true
+    },
+    {
+      "page": 4,
+      "normalized_text_identical": true,
+      "pixels_identical_at_144_dpi": true
+    },
+    {
+      "page": 5,
+      "normalized_text_identical": true,
+      "pixels_identical_at_144_dpi": true
+    },
+    {
+      "page": 6,
+      "normalized_text_identical": true,
+      "pixels_identical_at_144_dpi": true
+    },
+    {
+      "page": 7,
+      "normalized_text_identical": true,
+      "pixels_identical_at_144_dpi": true
+    },
+    {
+      "page": 8,
+      "normalized_text_identical": true,
+      "pixels_identical_at_144_dpi": true
+    },
+    {
+      "page": 9,
+      "normalized_text_identical": true,
+      "pixels_identical_at_144_dpi": true
+    },
+    {
+      "page": 10,
+      "normalized_text_identical": true,
+      "pixels_identical_at_144_dpi": true
+    },
+    {
+      "page": 11,
+      "normalized_text_identical": true,
+      "pixels_identical_at_144_dpi": true
+    },
+    {
+      "page": 12,
+      "normalized_text_identical": true,
+      "pixels_identical_at_144_dpi": true
+    },
+    {
+      "page": 13,
+      "normalized_text_identical": true,
+      "pixels_identical_at_144_dpi": true
+    }
+  ],
+  "unresolved_references_or_overfull_boxes": [],
+  "underfull_box_notices": [
+    "Underfull \\hbox (badness 1418) in paragraph at lines 409--410"
+  ],
+  "comparison_renderer": "MuPDF 1.28.2, 144 dpi",
+  "scope": "Final-source compilation and exact page-content/rendering comparison; not a formal verification of the theorems."
+}

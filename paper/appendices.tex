@@ -1,440 +1,492 @@
 \section{Exact Gaussian channel and response certificate}\label{app:channel}
 Put $Q_z=z_AQ_A+z_BQ_B$. Scalar commutators make the Magnus expansion terminate, giving
 \begin{equation}
- U_z=e^{i\theta_z}e^{iQ_z},\qquad
- \theta_z=\frac1{2\hbar}\sum_{ij}z_iz_jI_{ij}.
- \label{eq:Uz}
+U_z=e^{i\theta_z}e^{iQ_z},\qquad
+\theta_z=\frac1{2\hbar}\sum_{ij}z_iz_jI_{ij}.
+\label{eq:Uz}
 \end{equation}
 The definition of $I_{ij}$ is extended to $i=j$ here. Such terms are global because $z_i^2=1$. Splitting the full-time commutator integral at $t=s$ gives
 \begin{equation}
- [Q_A,Q_B]=-\frac{i}{\hbar}(I_{AB}-I_{BA}).
- \label{eq:commQ}
+[Q_A,Q_B]=-\frac i\hbar(I_{AB}-I_{BA}).
+\label{eq:commQ}
 \end{equation}
 Cyclicity of the reservoir trace, the Baker--Campbell--Hausdorff formula for scalar commutators, and the centered Gaussian characteristic function then give the exact record multiplier
-\begin{align}
- \frac{\rho_{zz'}(T)}{\rho_{zz'}(0)}={}&
- \exp\left[\frac{i\Delta_m}{4}(z_Az_B-z'_Az'_B)\right]\nonumber\\
- &\times\exp[i\sigma(z_Az'_B-z_Bz'_A)]\nonumber\\
- &\times\exp[-\tfrac12(z-z')^TV(z-z')].
- \label{eq:channel}
-\end{align}
+\begin{equation}
+\begin{split}
+\frac{\rho_{zz'}(T)}{\rho_{zz'}(0)}={}&\exp\left[\frac{i\Delta_m}4(z_Az_B-z'_Az'_B)\right]\\
+&\times\exp\left[i\sigma(z_Az'_B-z_Bz'_A)\right]\\
+&\times\exp\left[-\tfrac12(z-z')^{\mathsf T}V(z-z')\right].
+\end{split}
+\label{eq:multiplier}
+\end{equation}
 The expression is interpreted as a Schur multiplier when an initial matrix element is zero. A coherent reservoir mean contributes only local phases. The same formula follows for convergent continuum covariances. Damping is represented by including its quadratic reservoir, not by replacing frequencies in a unitary propagator by complex numbers.
-
-For $0\le u\le1$, scale the quantum forces by $\sqrt u$ and compose the resulting map with classical local Gaussian rotations of covariance $(1-u)V$, sampled independently of the reservoir. The total covariance stays $V$, while $\Delta_m,\sigma$ become $u\Delta_m,u\sigma$. This construction makes each interpolating map $\Phi_u$ completely positive and trace preserving, even on an input entangled with a spectator. Figure~\ref{fig:interpolation} records that construction.
 
 \begin{figure}[t]
 \centering
-\begin{quantikz}[row sep=0.22cm,column sep=0.35cm]
-\lstick{$A$}&\gate[3]{U_{\sqrt u}}&\gate{e^{i\xi_AZ_A}}&\qw\\
-\lstick{$R$}& &\qw&\rstick{\text{trace}}\qw\\
-\lstick{$B$}& &\gate{e^{i\xi_BZ_B}}&\qw
-\end{quantikz}
-\caption{A physical interpolation for the proof, not an experimental subtraction. Quantum couplings scale by $\sqrt u$; correlated classical rotations have covariance $(1-u)V$. Both noise contributions add to $V$.}
+\begin{tikzpicture}[x=1cm,y=1cm,>=Latex,font=\footnotesize]
+\node at (0,1) {$A$};\node at (0,0) {$R$};\node at (0,-1) {$B$};
+\draw (.3,1)--(6.9,1);\draw (.3,-1)--(6.9,-1);\draw[->] (.3,0)--(3.9,0);
+\draw[fill=white] (1, -1.3) rectangle (2.7,1.3);
+\node at (1.85,0) {$U_{\sqrt u}$};
+\node[draw,fill=white,minimum width=1.5cm,minimum height=.65cm] at (5.4,1) {$e^{i\xi_AZ_A}$};
+\node[draw,fill=white,minimum width=1.5cm,minimum height=.65cm] at (5.4,-1) {$e^{i\xi_BZ_B}$};
+\node at (4.35,0) {trace};
+\draw[dashed] (5.4,-.66)--(5.4,.66);
+\node[anchor=west,font=\scriptsize,align=left] at (5.6,0) {shared\\classical noise};
+\end{tikzpicture}
+\caption{A physical interpolation for the proof. Quantum couplings scale by $\sqrt u$; correlated classical rotations have covariance $(1-u)V$. Both noise contributions add to $V$.}
 \label{fig:interpolation}
 \end{figure}
 
-For $X_u=(\Phi_u\otimes\id)(\rho)$, differentiation of Eq.~\eqref{eq:channel} gives
-\begin{align}
- \partial_uX_u={}&\frac{i\Delta_m}{4}[Z_AZ_B,X_u]\nonumber\\
- &+i\sigma(Z_AX_uZ_B-Z_BX_uZ_A).
-\end{align}
+For $0\le u\le1$, scale the quantum forces by $\sqrt u$ and compose the resulting map with classical local Gaussian rotations of covariance $(1-u)V$, sampled independently of the reservoir. The total covariance stays $V$, while $\Delta_m,\sigma$ become $u\Delta_m,u\sigma$. This construction makes each interpolating map $\Phi_u$ completely positive and trace preserving, even on an input entangled with a spectator. Figure~\ref{fig:interpolation} records that construction.
+
+For $X_u=(\Phi_u\otimes\id)(\rho)$, differentiation of Eq.~\eqref{eq:multiplier} gives
+\begin{equation}
+\partial_uX_u=\frac{i\Delta_m}4[Z_AZ_B,X_u]
++i\sigma(Z_AX_uZ_B-Z_BX_uZ_A).
+\label{eq:derivative}
+\end{equation}
 Identity operators on the spectator are implicit. Since $X_u$ is a density matrix and the Pauli factors are unitary,
 \begin{equation}
- \tfrac12\norm{\partial_uX_u}_1\le |\Delta_m|/4+|\sigma|.
+\tfrac12\norm{\partial_uX_u}_1\le |\Delta_m|/4+|\sigma|.
+\label{eq:derivativebound}
 \end{equation}
-Integrate over $u$ and use $(|a+b|+|a-b|)/2=\max(|a|,|b|)$ for real $a,b$. With $a=I_{AB}/\hbar$ and $b=I_{BA}/\hbar$, this proves Theorem~\ref{thm:response}. The cap follows from $D\le1$. For a closed noiseless gate, $V=0$, $\sigma=0$, and the distance on $|++\rangle$ is $|\sin(\Delta_m/4)|$, proving first-order sharpness.
+Integrate over $u$ and use $(|a+b|+|a-b|)/2=\max(|a|,|b|)$ for real $a,b$. With $a=I_{AB}/\hbar$ and $b=I_{BA}/\hbar$, this proves Theorem~1. The cap follows from $D\le1$. For a closed noiseless gate, $V=0$, $\sigma=0$, and the distance on $\ket{++}$ is $|\sin(\Delta_m/4)|$, proving first-order sharpness.
 
-For a product state with Bloch vectors $a,b$, four times the expectation of Eq.~\eqref{eq:witness} is $1-a_xb_x+s(a_yb_z+a_zb_y)$. Its bilinear term is $a^TK_sb$ for an orthogonal matrix $K_s$, hence is at least $-|a||b|\ge-1$. Convexity proves positivity on separable states. Direct Pauli multiplication gives spectrum $(-1/2,1/2,1/2,1/2)$, so
+For a product state with Bloch vectors $a,b$, four times the expectation of Eq.~\eqref{eq:witness} is $1-a_xb_x+s(a_yb_z+a_zb_y)$. Its bilinear term is $a^{\mathsf T}K_sb$ for an orthogonal matrix $K_s$, hence is at least $-|a||b|\ge-1$. Convexity proves positivity on separable states. Direct Pauli multiplication gives spectrum $(-1/2,1/2,1/2,1/2)$, so
 \begin{equation}
- |\tr[W_s(\rho-\rho')]|\le D(\rho,\rho').
+|\tr[W_s(\rho-\rho')]|\le D(\rho,\rho').
+\label{eq:witnesslipschitz}
 \end{equation}
-Combining this with Theorem~\ref{thm:response} proves Eq.~\eqref{eq:false}. The ideal-state correlators are $\langle XX\rangle=1$ and $\langle YZ\rangle=\langle ZY\rangle=-\sin(\Delta_g/2)$, proving Eq.~\eqref{eq:wg}.
+Combining this with Theorem~1 proves Eq.~\eqref{eq:falsepositive}. The ideal-state correlators are $\langle XX\rangle=1$ and $\langle YZ\rangle=\langle ZY\rangle=-\sin(\Delta_g/2)$, proving Eq.~\eqref{eq:wg}.
 
-The partial transpose of $W_s$ is the joint $+1$ stabilizer projector of $-X_AX_B$ and $sY_AZ_B$. These are commuting independent Pauli operators; the projector has rank one. Therefore $\mathcal N(\rho)\ge-\tr(W_s\rho)$, where negativity is the sum of absolute negative eigenvalues of $\rho^{T_B}$. This also proves the negativity estimates used below without identifying every witness violation with the exact negativity.
+The partial transpose of $W_s$ is the joint $+1$ stabilizer projector of $-X_AX_B$ and $sY_AZ_B$. These are commuting independent Pauli operators; the projector has rank one. Therefore $\mathcal N(\rho)\ge-\tr(W_s\rho)$, where negativity $\mathcal N$ is the sum of absolute negative eigenvalues of $\rho^{T_B}$. This also proves the negativity estimates used below without identifying every witness violation with the exact negativity.
 
-For reciprocal synchronous forces, $I_{AB}=I_{BA}$ and $\sigma=0$. Their mechanical overlap factors are
-\begin{align}
- v_A&=e^{-2V_{AA}},\qquad v_B=e^{-2V_{BB}},\nonumber\\
- v_\pm&=e^{-2(V_{AA}+V_{BB}\pm2V_{AB})}.
-\end{align}
-On the initial $|++\rangle$, one obtains
+For reciprocal response and proportional pulses with the same timing, $I_{AB}=I_{BA}$ and $\sigma=0$. Their mechanical overlap factors are
 \begin{equation}
- -\tr(W_s\rho)=\frac{v_++v_--2}{8}
-       +\frac{v_A+v_B}{4}|\sin(\Delta_m/2)|
- \label{eq:visibility}
+\begin{gathered}
+v_A=e^{-2V_{AA}},\qquad v_B=e^{-2V_{BB}},\\
+v_\pm=e^{-2(V_{AA}+V_{BB}\pm2V_{AB})}.
+\end{gathered}
+\label{eq:visibilities}
 \end{equation}
-for the matching sign. In particular, $\langle XX\rangle=(v_++v_-)/2$, not $v_Av_B$. The noise is correlated, and its value is derived from $V$ rather than assigned. If both cross actions vanish, Eq.~\eqref{eq:channel} reduces exactly to $\mathcal D_V$ for any physical $V$.
+On the initial $\ket{++}$, one obtains
+\begin{equation}
+-\tr(W_s\rho)=\frac{v_++v_--2}{8}
++\frac{v_A+v_B}{4}|\sin(\Delta_m/2)|
+\label{eq:noisywitness}
+\end{equation}
+for the matching sign. In particular, $\langle XX\rangle=(v_++v_-)/2$, not $v_Av_B$. The noise is correlated, and its value is derived from $V$ rather than assigned. If both cross actions vanish, Eq.~\eqref{eq:multiplier} reduces exactly to $\DV$ for any physical $V$.
 
-\section{Replay errors and the two-response control}\label{app:calibration}
+\section{Replay errors and the two-response control}\label{app:replay}
 A force $F_j$ changes the mean of $q_i$ by $\int\chi_{ij}F_j$. This follows by the linear Heisenberg equations, or by the first commutator in the Dyson series: its scalar value makes all further response commutators vanish. Equation~\eqref{eq:replay} and the H\"older error estimates therefore hold exactly in the stated model.
 
 The actual force can also differ from its replay target. Write $f_i=\widehat f_i+\delta f_i$ and suppose $\norm{\delta f_i}_2\le r_i$. If the finite-window response has induced $L^2$ norm at most $K_{ij}$, and $\epsilon_{ij}$ bounds the nominal replay-displacement error in $L^2$, the action error is bounded by
-\begin{align}
- e_{ij}\le{}&\frac{\norm{\widehat f_i}_2\epsilon_{ij}}{|\lambda_j|}\nonumber\\
- &+K_{ij}\left(r_i\norm{\widehat f_j}_2+
- r_j\norm{\widehat f_i}_2+r_ir_j\right).
- \label{eq:forceerror}
-\end{align}
+\begin{equation}
+\begin{split}
+e_{ij}\le{}&\frac{\norm{\widehat f_i}_2\epsilon_{ij}}{|\lambda_j|}\\
+&+K_{ij}\bigl(r_i\norm{\widehat f_j}_2+r_j\norm{\widehat f_i}_2+r_ir_j\bigr).
+\end{split}
+\label{eq:forceerror}
+\end{equation}
 Expansion of the bilinear action and Cauchy--Schwarz prove all three additional terms. The response norm must itself be justified. This formula does not infer an unmeasured spectral tail from a few frequencies.
 
-For stationary response, use the Fourier convention $\widetilde f(\omega)=\int f(t)e^{i\omega t}\dd t$ and extend forces by zero. Then
+For stationary response, use the Fourier convention $\wt f(\omega)=\int f(t)e^{i\omega t}\,dt$ and extend forces by zero. Then
 \begin{equation}
- I_{ij}=\int_{-\infty}^{\infty}\frac{\dd\omega}{2\pi}
- \widetilde f_i(\omega)^*\chi_{ij}(\omega)\widetilde f_j(\omega).
- \label{eq:Fourier}
+I_{ij}=\int_{-\infty}^\infty\frac{d\omega}{2\pi}\,
+\wt f_i(\omega)^*\chi_{ij}(\omega)\wt f_j(\omega).
+\label{eq:fourieraction}
 \end{equation}
-The integral is real. Absolute values and Cauchy--Schwarz prove the uniform-envelope assertion following Eq.~\eqref{eq:design}. Time-domain replay avoids needing such an envelope if its complete displacement error is already controlled.
+The integral is real. Absolute values and Cauchy--Schwarz prove the uniform-envelope assertion following Eq.~\eqref{eq:budget}. Time-domain replay avoids needing such an envelope if its complete displacement error is already controlled.
 
-The null of Proposition~\ref{prop:null} follows from $b+\mathsf C a=0$. With measured coefficients this residual is $(b-\widehat b)+(\mathsf C-\widehat{\mathsf C})a$, giving Eq.~\eqref{eq:nullerr}. Closure of a loop $g=-m\ddot d_g/2$ follows from $d_g=\dot d_g=0$ at its endpoints. Ill conditioning does not invalidate the identity, but can make its error bound or required force amplitudes unusable.
+The null of Proposition~2 follows from $b+Ca=0$. With measured coefficients this residual is $(b-\widehat b)+(C-\widehat C)a$, giving Eq.~\eqref{eq:nullerror}. Closure of a loop $g=-m\ddot d_g/2$ follows from $d_g=\dot d_g=0$ at its endpoints. Ill conditioning does not invalidate the identity, but can make its error bound or required force amplitudes unusable.
 
-For an explicit numerical control, let $P_{\tau,H,t_0}$ denote the complete separation pulse of height $250\ \mu$m starting at $t_0$. Use
-\begin{align}
- d_A&=P_{0.5,2.5,0},&d_{B0}&=P_{0.5,2.5,0.5},\nonumber\\
- d_{g_1}&=P_{0.25,0,0},&d_{g_2}&=P_{0.5,0,3}.
- \label{eq:loopdefs}
-\end{align}
+For an explicit numerical control, let $P_{\tau,H,t_0}$ denote the complete separation pulse of height $250\ \mu{\rm m}$ starting at $t_0$. Use
+\begin{equation}
+\begin{gathered}
+d_A=P_{0.5,2.5,0},\qquad d_{B0}=P_{0.5,2.5,0.5},\\
+d_{g1}=P_{0.25,0,0},\qquad d_{g2}=P_{0.5,0,3}.
+\end{gathered}
+\label{eq:nullpulses}
+\end{equation}
 Choose the test susceptibility
-\begin{gather}
- \chi(\omega)=\frac1{M(\Omega^2-\omega^2-2i\zeta\Omega\omega)},\nonumber\\
- M=187\ \mathrm{kg},\quad\Omega=2\pi(0.42\ \mathrm{Hz}),\quad\zeta=0.58.
- \label{eq:damped}
-\end{gather}
+\begin{equation}
+\begin{gathered}
+\chi(\omega)=\frac1{M(\Omega^2-\omega^2-2i\zeta\Omega\omega)},\\
+M=187\ {\rm kg},\quad\Omega=2\pi(0.42\ {\rm Hz}),\quad\zeta=0.58.
+\end{gathered}
+\label{eq:damped}
+\end{equation}
 Ref.~\cite{Hermsdorf} states the suspended mass and fits the resonance frequency from the PSD; the latter is held fixed in the transmissibility fit yielding the damping ratio. Here both port participations are a numerical design choice. They are not measured horizontal or constrained-device parameters. This response is used only to exhibit a nonsymmetric pair of actions and a well-conditioned null.
 
 The baseline actions and control matrix are
-\begin{align}
- b/\hbar&\simeq(-1.53613\times10^{-6},\ 1.79662\times10^{-4})^T,\nonumber\\
- \mathsf C/\hbar&\simeq10^{-4}
- \begin{pmatrix}
- 1.64080465218&1.49297536559\\
- -1.63413864424&2.41243602167
- \end{pmatrix}.
-\end{align}
+\begin{equation}
+\begin{gathered}
+b/\hbar\simeq(-1.53613\times10^{-6},\ 1.79662\times10^{-4})^{\mathsf T},\\
+C/\hbar\simeq10^{-4}
+\begin{pmatrix}
+1.64080465218&1.49297536562\\
+-1.63413864423&2.41243602170
+\end{pmatrix}.
+\end{gathered}
+\label{eq:nullmatrix}
+\end{equation}
 The rounded coefficients are $a_1=0.42502996$ and $a_2=-0.45682594$. The first loop occurs before the delayed pulse, and the second subtracts from its final hold and closing ramp. Since $0<a_1<1$ and $-1<a_2<0$, direct comparison of the monotone opening and closing polynomials proves $0\le d_B\le d_0$. The retained gravitational phase is $86.5\%$ of the synchronized reference by the branch kernel in Appendix~\ref{app:gravity}.
 
 \begin{figure}[t]
 \centering
 \begin{tikzpicture}
-\begin{axis}[width=\columnwidth,height=5.1cm,
+\begin{axis}[width=\columnwidth,height=5.5cm,
  xlabel={Time (s)},ylabel={Branch separation ($\mu$m)},
- xmin=0,xmax=4,ymin=-5,ymax=280,
+ xmin=0,xmax=4,ymin=0,ymax=275,
  tick label style={font=\small},label style={font=\small},
- legend style={font=\footnotesize,at={(.5,.03)},anchor=south,draw=none}]
-\addplot[black,dashed] table[x=t,y=A,col sep=comma]{../data/null_pulses.csv};\addlegendentry{$A$}
-\addplot[black,dotted,thick] table[x=t,y=Bstaggered,col sep=comma]{../data/null_pulses.csv};\addlegendentry{Delayed $B$}
-\addplot[black,thick] table[x=t,y=Bcorrected,col sep=comma]{../data/null_pulses.csv};\addlegendentry{Calibrated $B$}
+ legend style={font=\scriptsize,draw=none,fill=white,at={(.03,.5)},anchor=west},
+ legend cell align=left]
+\addplot[black,densely dashed,thick] table[x=t,y=A]{null_pulses.dat};\addlegendentry{$A$}
+\addplot[black!55,dotted,thick] table[x=t,y=delayed]{null_pulses.dat};\addlegendentry{Delayed $B$}
+\addplot[black,thick] table[x=t,y=corrected]{null_pulses.dat};\addlegendentry{Calibrated $B$}
 \end{axis}
 \end{tikzpicture}
 \caption{The two-response null in the specified damped test model. Delaying $B$ removes the free-mode phase but not the mounted response. Two bounded closed loops cancel both directed actions while retaining a common gravitational interaction interval.}
-\label{fig:null}
+\label{fig:nullpulses}
 \end{figure}
 
-An independent interval evaluation treats the nominal parameters in Eq.~\eqref{eq:damped} as exact. It gives
-\begin{align}
- 6.39806498735&<10^8\det(\mathsf C/\hbar)<6.39806498736,\nonumber\\
- -1.15405\times10^{-14}&<I_{AB}/\hbar<-1.15403\times10^{-14},\nonumber\\
- 6.90469\times10^{-13}&<I_{BA}/\hbar<6.90471\times10^{-13}
-\end{align}
-for the eight-decimal coefficients, so $\beta<6.91\times10^{-13}$ is a numerical rounding bound for this test. More usefully, if each normalized response entry has measurement error at most $\epsilon$, Eq.~\eqref{eq:nullerr} gives $\beta_{\rm null}\le1.882\epsilon$ plus rounding error. Thus the residual is controlled by calibration, not by the displayed number of digits.
+An interval evaluation treats the nominal parameters in Eq.~\eqref{eq:damped} as exact. It gives
+\begin{equation}
+\begin{gathered}
+6.39806498735<10^8\det(C/\hbar)<6.39806498736,\\
+-1.15405\times10^{-14}<I_{AB}/\hbar<-1.15403\times10^{-14},\\
+6.90469\times10^{-13}<I_{BA}/\hbar<6.90471\times10^{-13}
+\end{gathered}
+\label{eq:nullintervals}
+\end{equation}
+for the eight-decimal coefficients, so $\beta<6.91\times10^{-13}$ is a numerical rounding bound for this test. More usefully, if each normalized response entry has measurement error at most $\epsilon$, Eq.~\eqref{eq:nullerror} gives $\beta_{\rm null}\le1.882\epsilon$ plus rounding error. Thus the residual is controlled by calibration, not by the displayed number of digits.
 
 Finite witness statistics are separate. With $N$ independent trials for each of the three Pauli correlators and sign $s$ fixed in advance, Hoeffding's inequality and a union bound give witness error
 \begin{equation}
- \epsilon_{\rm stat}=\frac34\sqrt{\frac{2\log(6/\alpha)}{N}}
+\epsilon_{\rm stat}=\frac34\sqrt{\frac{2\log(6/\alpha)}N}
+\label{eq:statistics}
 \end{equation}
 with probability at least $1-\alpha$. Each $[-1,1]$ correlator has error at most the square root except with probability $\alpha/3$. A violation exceeding $\beta_{\rm cal}+\epsilon_{\rm stat}$ rejects the covered mechanical-only null under these sampling assumptions. Established additional channel-distance errors add to that threshold.
 
 \section{Passive compliance and the pulse scaling}\label{app:passive}
 \subsection{Proof of the all-mode bounds}
-Let $R_\omega(t)=\vartheta(t)\sin(\omega t)/\omega$ and define $J_\omega(g,f)=\int g(R_\omega*f)\dd t$. The forces are extended by zero. One integration by parts gives
+Let $R_\omega(t)=\vartheta(t)\sin(\omega t)/\omega$ and define $J_\omega(g,f)=\int g(R_\omega*f)\,dt$. The forces are extended by zero. One integration by parts gives
 \begin{equation}
- (R_\omega*f)(t)=\frac1{\omega^2}
- \left[f(t)-\int_{-\infty}^t\cos\omega(t-s)\dot f(s)\dd s\right].
- \label{eq:IBP}
+(R_\omega*f)(t)=\frac1{\omega^2}\left[f(t)-\int_{-\infty}^t\cos\omega(t-s)\dot f(s)\,ds\right].
+\label{eq:parts1}
 \end{equation}
 Consequently,
 \begin{equation}
- |J_\omega(g,f)|\le\frac1{\omega^2}
- (\norm g_2\norm f_2+\norm g_1\norm{\dot f}_1).
- \label{eq:modebound}
+|J_\omega(g,f)|\le\frac1{\omega^2}\bigl(\norm g_2\norm f_2+\norm g_1\norm{\dot f}_1\bigr).
+\label{eq:Jbound}
 \end{equation}
-For each mode in Eq.~\eqref{eq:passive}, multiply by $|c_{ni}c_{nj}|/M_n$ and sum. The spectral Cauchy--Schwarz inequality
+For each mode in Eq.~\eqref{eq:modes}, multiply by $|c_{ni}c_{nj}|/M_n$ and sum. The spectral Cauchy--Schwarz inequality
 \begin{equation}
- \sum_n\frac{|c_{ni}c_{nj}|}{M_n\omega_n^2}
- \le\sqrt{C_iC_j}
+\sum_n\frac{|c_{ni}c_{nj}|}{M_n\omega_n^2}\le\sqrt{C_iC_j}
+\label{eq:spectralCS}
 \end{equation}
-proves Eq.~\eqref{eq:passivebound}, also for a positive spectral measure. The finite right-hand side supplies domination for the continuum limit.
+proves Eq.~\eqref{eq:passive}, also for a positive spectral measure. The finite right-hand side supplies domination for the continuum limit.
 
-For the smoother forces of Eq.~\eqref{eq:staticerror}, $R_\omega''+\omega^2R_\omega=\delta$ and a second integration by parts give the exact identity
+For the smoother forces of Eq.~\eqref{eq:gap}, $R_\omega''+\omega^2R_\omega=\delta$ and a second integration by parts give the exact identity
 \begin{equation}
- J_\omega(g,f)=\frac{\langle g,f\rangle}{\omega^2}
-                +\frac{J_\omega(\dot g,\dot f)}{\omega^2}.
- \label{eq:secondIBP}
+J_\omega(g,f)=\frac{\langle g,f\rangle}{\omega^2}
++\frac{J_\omega(\dot g,\dot f)}{\omega^2}.
+\label{eq:Jidentity}
 \end{equation}
-Indeed $R_\omega*f''=f-\omega^2R_\omega*f$ and
-$\langle g,R_\omega*f''\rangle=-J_\omega(\dot g,\dot f)$; the zero-extended endpoint conditions remove boundary terms. Apply Eq.~\eqref{eq:modebound} to the last term and use
+Indeed $R_\omega*f''=f-\omega^2R_\omega*f$ and $\langle g,R_\omega*f''\rangle=-J_\omega(\dot g,\dot f)$; the zero-extended endpoint conditions remove boundary terms. Apply Eq.~\eqref{eq:Jbound} to the last term and use
 \begin{equation}
- \sum_n\frac{|c_{ni}c_{nj}|}{M_n\omega_n^4}
- \le\frac{\sqrt{C_iC_j}}{\omega_1^2}.
+\sum_n\frac{|c_{ni}c_{nj}|}{M_n\omega_n^4}\le\frac{\sqrt{C_iC_j}}{\omega_1^2}.
+\label{eq:gapCS}
 \end{equation}
 This proves the second bound. No expansion in pulse bandwidth has been used. Replacing the full spectrum by a claimed gap is permissible only when the gap is actually part of the specified response model.
 
 \subsection{Exact pulse constants}
 Differentiating Eq.~\eqref{eq:pulse} gives $s'(u)=140u^3(1-u)^3$. Polynomial integration gives
-\begin{align}
- \int_0^1(s')^2\dd u&=700/429,&
- \int_0^1(s'')^2\dd u&=280/11,\nonumber\\
- \int_0^1(s''')^2\dd u&=1120,&
- \int_0^1s^2\dd u&=521/1287.
-\end{align}
+\begin{equation}
+\begin{gathered}
+\int_0^1(s')^2\,du=700/429,\qquad
+\int_0^1(s'')^2\,du=280/11,\\
+\int_0^1(s''')^2\,du=1120,\qquad
+\int_0^1s^2\,du=521/1287.
+\end{gathered}
+\label{eq:polyL2}
+\end{equation}
 For example, the first is $19600\,6!6!/13!$; the others follow by expanding the displayed polynomial. Splitting at the real roots of its successive derivatives gives
-\begin{align}
- \int_0^1|s''|\dd u&=35/8,\nonumber\\
- \int_0^1|s'''|\dd u&=336\sqrt5/25,\nonumber\\
- \int_0^1|s''''|\dd u&=273.
-\end{align}
+\begin{equation}
+\begin{gathered}
+\int_0^1|s''|\,du=35/8,\qquad
+\int_0^1|s'''|\,du=336\sqrt5/25,\\
+\int_0^1|s''''|\,du=273.
+\end{gathered}
+\label{eq:polyL1}
+\end{equation}
 The first is twice the maximum of $s'$. The extrema for the second occur at $u=(1\pm1/\sqrt5)/2$; those for the third occur at $u=1/2$ and $u=(1\pm\sqrt{3/5})/2$. Substitution in the preceding derivatives yields these absolute integrals. Both ramps therefore give
-\begin{align}
- \norm f_1&=\frac{35md_0}{8\tau},&
- \norm f_2^2&=\frac{140m^2d_0^2}{11\tau^3},\nonumber\\
- \norm{\dot f}_1&=\frac{336\sqrt5\,md_0}{25\tau^2},&
- \norm{\dot f}_2^2&=\frac{560m^2d_0^2}{\tau^5},\nonumber\\
- \norm{\ddot f}_1&=\frac{273md_0}{\tau^3},&
- \max|f|&=\frac{42\sqrt5\,md_0}{25\tau^2}.
- \label{eq:norms}
-\end{align}
+\begin{equation}
+\begin{aligned}
+\norm f_1&=\frac{35md_0}{8\tau},&\norm f_2^2&=\frac{140m^2d_0^2}{11\tau^3},\\
+\norm{\dot f}_1&=\frac{336\sqrt5\,md_0}{25\tau^2},&\norm{\dot f}_2^2&=\frac{560m^2d_0^2}{\tau^5},\\
+\norm{\ddot f}_1&=\frac{273md_0}{\tau^3},&\max|f|&=\frac{42\sqrt5\,md_0}{25\tau^2}.
+\end{aligned}
+\label{eq:allnorms}
+\end{equation}
 The time integrals are
 \begin{equation}
- \int\dot d^2\dd t=\frac{1400d_0^2}{429\tau},\qquad
- \int d^2\dd t=d_0^2\left(H+\frac{1042\tau}{1287}\right).
+\int\dot d^2\,dt=\frac{1400d_0^2}{429\tau},\qquad
+\int d^2\,dt=d_0^2\left(H+\frac{1042\tau}{1287}\right).
+\label{eq:pathnorms}
 \end{equation}
-These prove Eq.~\eqref{eq:forceL2}, the replay scales, and the free recoil constant. Inserting the second identity in Eq.~\eqref{eq:gravity} and bounding $1/(1-d^2/R^2)$ between $1$ and $1/(1-d_0^2/R^2)$ proves Eq.~\eqref{eq:scaling}. For free translation it gives the corresponding bounds with $\mathcal R=R^3\int\dot d^2/(2GM\int d^2)$, recovering the $\tau^{-1}$ hold-dominated scaling.
+These prove Eq.~\eqref{eq:forcenorm}, the replay scales, and the free recoil constant. Inserting the second identity in Eq.~\eqref{eq:gravity} and bounding $1/(1-d^2/R^2)$ between $1$ and $1/(1-d_0^2/R^2)$ proves Eq.~\eqref{eq:ratio}. For free translation it gives the corresponding bounds with $\mathcal R=R^3\int\dot d^2\,dt/(2GM\int d^2\,dt)$, recovering the $\tau^{-1}$ hold-dominated scaling.
 
 For the synchronized pulse, the static phase approximation and its error are particularly explicit:
-\begin{align}
- \Delta_{m,0}&=\frac{560 C_{AB}m^2d_0^2}{11\hbar\tau^3},\nonumber\\
- |\Delta_m-\Delta_{m,0}|&\le
- \frac{4\sqrt{C_AC_B}\,m^2d_0^2}{\hbar\omega_1^2\tau^5}
- \left(560+\frac{91728\sqrt5}{25}\right).
- \label{eq:explicitbarbound}
-\end{align}
-All constants in the clamped-link comparison follow from this inequality and the analytic interval for Eq.~\eqref{eq:gravity}. The displayed intervals are rounded outward for the nominal design parameters; the archive includes an interval arithmetic check.
+\begin{equation}
+\begin{split}
+\Delta_{m,0}&=\frac{560C_{AB}m^2d_0^2}{11\hbar\tau^3},\\
+|\Delta_m-\Delta_{m,0}|&\le\frac{4\sqrt{C_AC_B}\,m^2d_0^2}{\hbar\omega_1^2\tau^5}\\
+&\qquad\times\left(560+\frac{91728\sqrt5}{25}\right).
+\end{split}
+\label{eq:explicitgap}
+\end{equation}
+All constants in the clamped-link comparison follow from this inequality and the analytic interval for Eq.~\eqref{eq:gravity}. The displayed intervals are rounded outward for the nominal design parameters.
 
 \subsection{Clamped-link Green function and causality}
-Varying Eq.~\eqref{eq:bar} gives $u_{tt}-c_s^2u_{xx}=F/(\varrho A)$, a local wave equation. Its retarded Green function in a Dirichlet interval is the reflected image sum of the one-dimensional free wave Green function, with the opposite sign for odd reflections. Every term vanishes before its path's acoustic travel time. For an interior observation point, only finitely many reflected paths arrive in any finite interval. This proves finite propagation speed without a mode cutoff.
-
-Equivalently,
+Varying Eq.~\eqref{eq:rodH} gives $u_{tt}-c_s^2u_{xx}=F/(\varrho A)$, where $F$ is force per unit length. Its retarded Green function in a Dirichlet interval is the reflected image sum of the one-dimensional free wave Green function, with the opposite sign for odd reflections. Every term vanishes before its path's acoustic travel time. For an interior observation point, only finitely many reflected paths arrive in any finite interval. This proves finite propagation speed without a mode cutoff. Equivalently,
 \begin{equation}
- u(x)=\sqrt2\sum_{n\ge1}q_n\sin(n\pi x/\ell),\quad
- M_n=\varrho A\ell,\quad\omega_n=n\omega_1.
+\begin{gathered}
+u(x)=\sqrt2\sum_{n\ge1}q_n\sin(n\pi x/\ell),\\
+M_n=\varrho A\ell,\qquad\omega_n=n\omega_1.
+\end{gathered}
+\label{eq:rodmodes}
 \end{equation}
 A uniform port centered at $x_i$ has
 \begin{equation}
- c_{ni}=\sqrt2\sin(n\pi x_i/\ell)
-         \operatorname{sinc}(n\pi b/2\ell),
+c_{ni}=\sqrt2\sin(n\pi x_i/\ell)\sinc(n\pi b/2\ell),
+\label{eq:patchmode}
 \end{equation}
-where $\operatorname{sinc}x=\sin x/x$. This mode expansion and the image solution are representations of the same causal field.
+where $\sinc x=\sin x/x$. This mode expansion and the image solution are representations of the same causal field.
 
-The static Green function solves $-EA\partial_x^2 C(x,y)=\delta(x-y)$ with zero endpoints. Continuity and its derivative jump give
+The static Green function solves $-EA\partial_x^2C(x,y)=\delta(x-y)$ with zero endpoints. Continuity and its derivative jump give
 \begin{equation}
- C(x,y)=\frac{\min(x,y)-xy/\ell}{EA}.
+C(x,y)=\frac{\min(x,y)-xy/\ell}{EA}.
+\label{eq:staticGreen}
 \end{equation}
-For the two disjoint symmetric patches, averaging gives $C_{AB}=\ell/(9EA)$. For two independent uniform points in one patch centered at $x_i$, the average of $\min(x,y)$ is $x_i-b/6$ and the average of $xy$ is $x_i^2$. This proves both self compliances in Eq.~\eqref{eq:barC}.
+For the two disjoint symmetric patches, averaging gives $C_{AB}=\ell/(9EA)$. For two independent uniform points in one patch centered at $x_i$, the average of $\min(x,y)$ is $x_i-b/6$ and the average of $xy$ is $x_i^2$. This proves both self compliances in Eq.~\eqref{eq:rodC}.
 
-The NIST polynomial used for the numerical modulus is, with $\Theta$ in kelvin and $E$ in GPa~\cite{Steel},
-\begin{align}
- E(\Theta)={}&210.0593+0.1534883\Theta
- -0.001617390\Theta^2\nonumber\\
- &+5.117060\times10^{-6}\Theta^3
- -6.154600\times10^{-9}\Theta^4.
-\end{align}
-It is the tabulated $57$--$293$ K fit. Evaluating at $293$ K yields the nominal $E$ used in the paper. The stated fit error is not interpreted as a certification of an individual material specimen.
+The NIST polynomial used for the numerical modulus is, with temperature $\Theta$ in kelvin and $E$ in GPa \cite{NISTsteel},
+\begin{equation}
+\begin{split}
+E(\Theta)={}&210.0593+0.1534883\Theta\\
+&-0.001617390\Theta^2+5.117060\times10^{-6}\Theta^3\\
+&-6.154600\times10^{-9}\Theta^4.
+\end{split}
+\label{eq:modulus}
+\end{equation}
+It is the tabulated 57--293 K fit. Evaluating at 293 K yields the nominal $E$ used in the paper.
 
 \subsection{Distributed forces and constrained motion}
-For a constrained test mass, let $a$ be its anchor coordinate and $v$ its actuator coordinate. A linearized Hamiltonian has potential $k(x-a)^2/2-ZA(t)(x-v)$. Prescribing $x=zd/2$ with zero reference anchor displacement requires $A=m(\ddot d+\omega_p^2d)/2$, where $\omega_p^2=k/m$. Differentiating the potential with respect to $a$ and $v$ gives the two reactions in Eq.~\eqref{eq:loads}. Their work is $f_{\rm anchor}q_{\rm anchor}+f_{\rm act}q_{\rm act}$. Only when these coordinates coincide may the two forces be combined into their net inertial value. Moving anchors and actuator feedback require the actual resulting load histories, not this fixed-anchor substitution.
+For a constrained test mass, let $a$ be its anchor coordinate and $v$ its actuator coordinate. A linearized Hamiltonian has potential $k(x-a)^2/2-Z\mathcal A(t)(x-v)$. Prescribing $x=zd/2$ with zero reference anchor displacement requires $\mathcal A=m(\ddot d+\omega_p^2d)/2$, where $\omega_p^2=k/m$. Differentiating the potential with respect to $a$ and $v$ gives the two reactions in Eq.~\eqref{eq:loads}. Their work is $f_{\rm anchor}q_{\rm anchor}+f_{\rm act}q_{\rm act}$. Only when these coordinates coincide may the two forces be combined into their net inertial value. Moving anchors and actuator feedback require the actual resulting load histories, not this fixed-anchor substitution.
 
 For arbitrary retained components $\alpha,\gamma$, the exact action is
 \begin{equation}
- I_{ij}=\sum_{\alpha\gamma}\int\dd t\int^t\dd s\,
- f_{i\alpha}(t)\chi_{i\alpha,j\gamma}(t,s)f_{j\gamma}(s).
+I_{ij}=\sum_{\alpha\gamma}\int dt\int^t ds\,
+f_{i\alpha}(t)\chi_{i\alpha,j\gamma}(t,s)f_{j\gamma}(s).
+\label{eq:vectoraction}
 \end{equation}
-The scalar $Q_i$ is the same sum of the smeared linear coordinates, so every step in Appendix~\ref{app:channel} is unchanged. Under an invertible linear coordinate change $q'=Lq$, work is preserved by $f'=L^{-T}f$, while $\chi'=L\chi L^T$; hence the action is invariant. A prescribed common translation of coordinates changes only local record phases. This proves coordinate invariance of the mechanical certificate, without asserting a new gravitational factorization theorem.
+The scalar $Q_i$ is the same sum of the smeared linear coordinates, so every step in Appendix~\ref{app:channel} is unchanged. Under an invertible linear coordinate change $q'=Lq$, work is preserved by $f'=L^{-\mathsf T}f$, while $\chi'=L\chi L^{\mathsf T}$; hence the action is invariant. A prescribed common translation of coordinates changes only local record phases. This proves coordinate invariance of the mechanical certificate, without asserting a new gravitational factorization theorem.
 
-\section{Free recoil and a causal elastic completion}\label{app:elastic}
+\section{Free recoil and a causal elastic completion}\label{app:free}
 In the free interaction picture,
 \begin{equation}
- [X(t),X(s)]=-i\hbar(t-s)/M.
+[X(t),X(s)]=-i\hbar(t-s)/M.
+\label{eq:freecomm}
 \end{equation}
 Each test body obeys the corresponding relation with its own mass. All nested commutators beyond second order vanish. The closed endpoints give zero total impulse and zero first time moment of each force, so the first Magnus term vanishes. All self terms are proportional to $Z_i^2=I$. The cross action is
-\begin{align}
- I_{AB}&=\frac1M\int a_A(t)\int_0^t(t-s)a_B(s)\dd s\dd t\nonumber\\
-       &=-\frac{m_A m_B}{4M}\int\dot d_A\dot d_B\dd t.
-\end{align}
-It is symmetric in $A,B$. Equation~\eqref{eq:phases} proves Eq.~\eqref{eq:freephase} as an operator identity, independent of the motional state. Integrating the support acceleration also gives the displacement quoted in the main text and verifies cancellation of the total branch-dependent mass dipole at every time. The negativity of the ideal final $|++\rangle$ state follows by the two singular values of its $2\times2$ coefficient matrix, whose product is $|\sin(\Delta_{\rm rec}/2)|/2$.
+\begin{equation}
+\begin{split}
+I_{AB}&=\frac1M\int a_A(t)\int_0^t(t-s)a_B(s)\,ds\,dt\\
+&=-\frac{m_Am_B}{4M}\int\dot d_A\dot d_B\,dt.
+\end{split}
+\label{eq:freeaction}
+\end{equation}
+It is symmetric in $A,B$. Equation~\eqref{eq:phases} proves Eq.~\eqref{eq:recoil} as an operator identity, independent of the motional state. Integrating the support acceleration also gives the displacement quoted in the main text and verifies cancellation of the total branch-dependent mass dipole at every time. The negativity of the ideal final $\ket{++}$ state follows by the two singular values of its $2\times2$ coefficient matrix, whose product is $|\sin(\Delta_{\rm rec}/2)|/2$.
 
 A local completion uses a free-ended elastic field with line density $M/\ell$, wave speed $c_s<c$, and nonnegative normalized local port profiles. Neumann boundary conditions give
 \begin{equation}
- u(x)=q_0+\sqrt2\sum_{n\ge1}q_n\cos(n\pi x/\ell),
- \quad\omega_n=n\pi c_s/\ell,
+u(x)=q_0+\sqrt2\sum_{n\ge1}q_n\cos(n\pi x/\ell),\qquad
+\omega_n=n\pi c_s/\ell,
+\label{eq:Neumann}
 \end{equation}
-with mode masses $M$. The translating mode $q_0$ gives Eq.~\eqref{eq:freephase}; all other port coefficients satisfy $|c_{ni}|\le\sqrt2$. Its point-port retarded Green function is
-\begin{align}
- \chi(x,y;t)=\frac{\ell}{2Mc_s}\sum_{k\in\mathbb Z}
- \bigg[&\vartheta\left(t-\frac{|x-y+2k\ell|}{c_s}\right)\nonumber\\
- +&\vartheta\left(t-\frac{|x+y+2k\ell|}{c_s}\right)\bigg].
- \label{eq:Neumann}
-\end{align}
+with mode masses $M$. The translating mode $q_0$ gives Eq.~\eqref{eq:recoil}; all other port coefficients satisfy $|c_{ni}|\le\sqrt2$. Its point-port retarded Green function is
+\begin{equation}
+\begin{split}
+\chi(x,y;t)=\frac{\ell}{2Mc_s}\sum_{k\in\mathbb Z}\bigg[&\vartheta\left(t-\frac{|x-y+2k\ell|}{c_s}\right)\\
++&\vartheta\left(t-\frac{|x+y+2k\ell|}{c_s}\right)\bigg].
+\end{split}
+\label{eq:NeumannGreen}
+\end{equation}
 This is the free one-dimensional wave Green function and its even reflections; substitution verifies the wave equation, its impulsive source, and the zero normal derivatives at the endpoints. Only finitely many images arrive in finite time. Averaging over separated port profiles preserves causality. The complete field, not the translating mode alone, is the local model.
 
-For identical synchronous smooth forces $f$, Eq.~\eqref{eq:modebound} gives a phase bound for all nonzero modes:
+For identical synchronous smooth forces $f$, Eq.~\eqref{eq:Jbound} gives a phase bound for all nonzero modes:
 \begin{equation}
- B_{\rm el}=\frac{8\zeta(2)}{M\hbar\omega_1^2}
- \left(\norm f_2^2+\norm f_1\norm{\dot f}_1\right),
- \qquad |\Delta_{\rm el}|\le B_{\rm el}.
- \label{eq:freeRodphase}
+\begin{gathered}
+B_{\rm el}=\frac{8\zeta(2)}{M\hbar\omega_1^2}\bigl(\norm f_2^2+\norm f_1\norm{\dot f}_1\bigr),\\
+|\Delta_{\rm el}|\le B_{\rm el}.
+\end{gathered}
+\label{eq:elasticbound}
 \end{equation}
-Here $\omega_1=\pi c_s/\ell$ and $\zeta(p)$ denotes the Riemann zeta function. No pulse-frequency cutoff is used.
+Here $\omega_1=\pi c_s/\ell$ and $\zeta(p)$ denotes the Riemann zeta function, distinct from the damping ratio in Eq.~\eqref{eq:damped}. No pulse-frequency cutoff is used.
 
-Let the nonzero modes initially be independent thermal oscillators at temperature $\Theta$, while the free mode has an arbitrary normal state independent of the records. With $\widetilde f(\omega)=\int f(t)e^{i\omega t}\dd t$, their displacement amplitudes and noise covariance are
-\begin{align}
- \alpha_{ni}&=\frac{i c_{ni}\widetilde f(\omega_n)}{\sqrt{2M\hbar\omega_n}},\nonumber\\
- V_{ij}&=\sum_{n\ge1}\coth\left(\frac{\hbar\omega_n}{2k_B\Theta}\right)
-       \operatorname{Re}(\alpha_{ni}\alpha_{nj}^*).
- \label{eq:thermal}
-\end{align}
-The sign of $\alpha$ depends on the chosen force sign and does not affect this covariance. Two integrations by parts give $|\widetilde f(\omega)|\le\norm{\ddot f}_1/\omega^2$. Using $\coth x\le1+1/x$ for $x>0$, and the two-port coefficient bound, gives
-\begin{align}
- \tr V\le B_S:=\frac{2\norm{\ddot f}_1^2}{M\hbar}
- \left[\frac{\zeta(5)}{\omega_1^5}
- +\frac{2k_B\Theta\,\zeta(6)}{\hbar\omega_1^6}\right].
- \label{eq:freeRodnoise}
-\end{align}
+Let the nonzero modes initially be independent thermal oscillators at temperature $\Theta$, while the free mode has an arbitrary normal state independent of the records. Their displacement amplitudes and noise covariance are
+\begin{equation}
+\begin{split}
+\alpha_{ni}&=\frac{ic_{ni}\wt f(\omega_n)}{\sqrt{2M\hbar\omega_n}},\\
+V_{ij}&=\sum_{n\ge1}\coth\left(\frac{\hbar\omega_n}{2k_B\Theta}\right)
+\operatorname{Re}(\alpha_{ni}\alpha_{nj}^*).
+\end{split}
+\label{eq:thermalV}
+\end{equation}
+The sign of $\alpha$ depends on the chosen force sign and does not affect this covariance. Two integrations by parts give $|\wt f(\omega)|\le\norm{\ddot f}_1/\omega^2$. Using $\coth x\le1+1/x$ for $x>0$, and the two-port coefficient bound, gives
+\begin{equation}
+\tr V\le B_S:=\frac{2\norm{\ddot f}_1^2}{M\hbar}
+\left[\frac{\zeta(5)}{\omega_1^5}+\frac{2k_B\Theta\,\zeta(6)}{\hbar\omega_1^6}\right].
+\label{eq:noisebound}
+\end{equation}
 The zero-temperature limit is obtained by removing the second term.
 
 The correlated dephasing channel is a completely positive semigroup generated by $-\tfrac12\sum_k\lambda_k[A_k,[A_k,\cdot]]$, where $\lambda_k$ and unit vectors diagonalize $V$ and $A_k$ is the corresponding real combination of $Z_A,Z_B$. Since $\norm{A_k}_\infty\le\sqrt2$, integration of the trace-norm derivative gives
 \begin{equation}
- D(\mathcal D_V(\rho),\rho)\le\min(1,2\tr V).
+D(\DV(\rho),\rho)\le\min(1,2\tr V).
+\label{eq:dephasingbound}
 \end{equation}
 A phase error $\delta$ in $e^{i\Delta Z_AZ_B/4}$ changes a state by trace distance at most $|\delta|/4$, by integrating its commutator generator. The witness and negativity properties in Appendix~\ref{app:channel} therefore imply
 \begin{equation}
- \mathcal N(\rho_{AB})\ge
- \max\left(0,\frac{|\sin(\Delta_{\rm rec}/2)|}{2}
-                 -\frac{B_{\rm el}}4-2B_S\right).
- \label{eq:rodneg}
+\mathcal N(\rho_{AB})\ge\max\left(0,\frac{|\sin(\Delta_{\rm rec}/2)|}{2}-\frac{B_{\rm el}}4-2B_S\right).
+\label{eq:negativitybound}
 \end{equation}
 For the Bose pulse, choose the model parameters $\ell=1.1$ m, $c_s=5000$ m/s, $\Theta=4$ K, and
 \begin{equation}
- M=\frac{1400m^2d_0^2}{429\pi\hbar\tau}
-   =0.1231274039\ldots\ \mathrm{kg}.
+M=\frac{1400m^2d_0^2}{429\pi\hbar\tau}=0.1231274039\ldots\ {\rm kg}.
+\label{eq:freemass}
 \end{equation}
-These are design choices, not a freely recoiling instrument identification. Uniform ports of width $100\ \mu$m separated by $450\ \mu$m are disjoint. Then $\Delta_{\rm rec}=-\pi$, $B_{\rm el}<3.584\times10^{-5}$, and $B_S<5.771\times10^{-7}$, proving $\mathcal N>0.49998$ at $G=0$ for the full causal field. The theorem does not require a mode revival.
+These are design choices, not a freely recoiling instrument identification. Uniform ports of width $100\ \mu{\rm m}$ separated by $450\ \mu{\rm m}$ are disjoint. Then $\Delta_{\rm rec}=-\pi$, $B_{\rm el}<3.584\times10^{-5}$, and $B_S<5.771\times10^{-7}$, proving $\mathcal N>0.49998$ at $G=0$ for the full causal field. The result does not require a mode revival.
 
 \section{Gravitational references and complete sources}\label{app:gravity}
 \subsection{Proposal scales and branch phases}
-For centers $x_i^z=x_i^0+z_id_i/2$, the branch phase is $\phi_z=-\hbar^{-1}\int U_z\dd t$ with $U_z=-Gm_A m_B/r_z$. The invariant $\phi_{++}+\phi_{--}-\phi_{+-}-\phi_{-+}$ gives Eq.~\eqref{eq:gravity} for equal collinear splittings. More generally, put $u=(d_A-d_B)/2$ and $v=(d_A+d_B)/2$. The instantaneous collinear kernel is
+For centers $x_i^z=x_i^0+z_id_i/2$, the branch phase is $\phi_z=-\hbar^{-1}\int U_z\,dt$ with $U_z=-Gm_Am_B/r_z$. The invariant $\phi_{++}+\phi_{--}-\phi_{+-}-\phi_{-+}$ gives Eq.~\eqref{eq:gravity} for equal collinear splittings. More generally, put $u=(d_A-d_B)/2$ and $v=(d_A+d_B)/2$. The instantaneous collinear kernel is
 \begin{equation}
- K_{\parallel}=\frac{2R(u^2-v^2)}{(R^2-u^2)(R^2-v^2)}.
- \label{eq:collinear}
+K_\parallel=\frac{2R(u^2-v^2)}{(R^2-u^2)(R^2-v^2)}.
+\label{eq:collinearkernel}
 \end{equation}
 For parallel splittings transverse to the midpoint separation it is
 \begin{equation}
- K_{\perp}=\frac{2}{\sqrt{R^2+u^2}}-\frac{2}{\sqrt{R^2+v^2}}.
- \label{eq:transverse}
+K_\perp=\frac2{\sqrt{R^2+u^2}}-\frac2{\sqrt{R^2+v^2}}.
+\label{eq:transversekernel}
 \end{equation}
-Integration of $Gm_A m_B K/\hbar$ gives the pair phase. Both formulas follow by inserting the four separations and rationalizing their differences; the first form also avoids subtracting nearly equal inverse lengths numerically. Spherically symmetric nonoverlapping classical mass profiles have the same Newtonian pair potential. The calculations here remain prescribed-path reference models.
+Integration of $Gm_Am_BK/\hbar$ gives the pair phase. Both formulas follow by inserting the four separations; rationalizing the first difference gives the form in Eq.~\eqref{eq:collinearkernel}, which also avoids subtracting nearly equal inverse lengths numerically. Spherically symmetric nonoverlapping classical mass profiles have the same Newtonian pair potential. The calculations here remain prescribed-path reference models.
 
-The screened row in Table~\ref{tab:targets} uses Ref.~\cite{Schut}'s nominal $m=10^{-14}$ kg, $d_0=29\ \mu$m, $\tau=0.25$ s, $H=0.5$ s, dielectric constant $\varepsilon=5.1$, density $\varrho_d=3500$ kg/m$^3$, dipole magnitude $p=10^{-2}e\,\mathrm{cm}$, initial distance $z_0=41\ \mu$m, and plate thickness $W=1\ \mu$m. We choose the aligned-dipole orientation and the smooth ramp of Eq.~\eqref{eq:pulse}. Dividing the cited ideal surface forces by mass gives
-\begin{align}
- \ddot z&=-A_C/z^5-A_D/z^4,\quad z(0)=z_0,\quad\dot z(0)=0,\nonumber\\
- A_C&=\frac{3\hbar c}{2\pi}\frac{\varepsilon-1}{\varepsilon+2}
-                  \frac3{4\pi\varrho_d},\qquad
- A_D=\frac{3p^2}{32\pi\epsilon_0m}.
- \label{eq:screen}
-\end{align}
-These forces are physical input approximations from that proposal. At one second, the calculated $z$ is $16.4172\ \mu$m. Using $R(t)=2z(t)+W$ in Eq.~\eqref{eq:transverse} gives $\Delta_g=+0.09504$ rad. Keeping the initial $83\ \mu$m gap fixed would not give that number.
+The screened row in Table~\ref{tab:budget} uses Ref.~\cite{Schut}'s nominal $m=10^{-14}$ kg, $d_0=29\ \mu{\rm m}$, $\tau=0.25$ s, $H=0.5$ s, dielectric constant $\varepsilon=5.1$, density $\varrho_d=3500\ {\rm kg/m^3}$, dipole magnitude $p=10^{-2}\ e\,{\rm cm}$, initial distance $z_0=41\ \mu{\rm m}$, and plate thickness $W=1\ \mu{\rm m}$. We choose the aligned-dipole orientation and the smooth ramp of Eq.~\eqref{eq:pulse}. Dividing the cited ideal surface forces by mass gives
+\begin{equation}
+\begin{gathered}
+\ddot z=-A_C/z^5-A_D/z^4,\qquad z(0)=z_0,\quad\dot z(0)=0,\\
+A_C=\frac{3\hbar c}{2\pi}\frac{\varepsilon-1}{\varepsilon+2}\frac3{4\pi\varrho_d},\qquad
+A_D=\frac{3p^2}{32\pi\epsilon_0m}.
+\end{gathered}
+\label{eq:screen}
+\end{equation}
+These forces are physical input approximations from that proposal. At one second, the calculated $z$ is $16.4172\ \mu{\rm m}$. Using $R(t)=2z(t)+W$ in Eq.~\eqref{eq:transversekernel} gives $\Delta_g=+0.09504$ rad. Keeping the initial $83\ \mu{\rm m}$ gap fixed would not give that number.
 
-For the short reference, $m=10^{-14}$ kg, $d_0=1\ \mu$m, $R=100\ \mu$m, and the $0.14$ s interaction scale are taken from Ref.~\cite{Williams}. Its realization uses pendula of length $0.5$ m. The $1$ and $10$ ms ramps and controlled flat hold in this paper are additional choices. They make the branch histories, load rule, and comparison reproducible. They are not the unforced constrained orbit, which would use $d(t)\propto\cos\sqrt{g/L}\,t$ and its own preparation and closure. Equation~\eqref{eq:loads} identifies the separate forces needed for the controlled completion. Our scalar-link estimate further specifies that each record's two loads are applied at its same displacement coordinate. Otherwise the full component response must be used.
+For the short reference, $m=10^{-14}$ kg, $d_0=1\ \mu{\rm m}$, $R=100\ \mu{\rm m}$, and the $0.14$ s interaction scale are taken from Ref.~\cite{Williams}. Its realization uses pendula of length $0.5$ m. The 1 and 10 ms ramps and controlled flat hold in this paper are additional choices. They make the branch histories, load rule, and comparison reproducible. They are not the unforced constrained orbit, which would use $d(t)\propto\cos(\omega_p t)$ and its own preparation and closure. Equation~\eqref{eq:loads} identifies the separate forces needed for the controlled completion. Our scalar-link estimate further specifies that each record's two loads are applied at its same displacement coordinate. Otherwise the full component response must be used.
 
-We use $G=6.67430\times10^{-11}$ m$^3$kg$^{-1}$s$^{-2}$, $\epsilon_0=8.8541878188\times10^{-12}$ F/m, and the exact SI values of $h$, $c$, $k_B$, and $e$~\cite{NIST}. Extra numerical digits specify reproducibility, not physical parameter accuracy.
+We use $G=6.67430\times10^{-11}\ {\rm m^3\,kg^{-1}\,s^{-2}}$, $\epsilon_0=8.8541878188\times10^{-12}\ {\rm F/m}$, and the exact SI values of $h,c,k_B$, and $e$ \cite{CODATA}. Extra numerical digits specify reproducibility, not physical parameter accuracy.
 
 \subsection{The shared support's gravitational source}
 For four complete finite Newtonian densities write
 \begin{equation}
- \rho_z=\rho_0+z_A\rho_A+z_B\rho_B+z_Az_B\rho_{AB}.
+\rho_z=\rho_0+z_A\rho_A+z_B\rho_B+z_Az_B\rho_{AB}.
+\label{eq:density}
 \end{equation}
 Each coefficient is the average of the four densities against its indicated sign. Let
 \begin{equation}
- B(a,b)=\int\frac{a(\bm x)b(\bm y)}{|\bm x-\bm y|}\dd^3x\dd^3y,
- \qquad U_z=-\frac G2B(\rho_z,\rho_z).
+B(a,b)=\int\frac{a(x)b(y)}{|x-y|}\,d^3x\,d^3y,\qquad
+U_z=-\frac G2 B(\rho_z,\rho_z).
+\label{eq:bilinear}
 \end{equation}
 Polarizing this quadratic form gives the exact complete-source invariant
 \begin{equation}
- \Delta_g=\frac{4G}{\hbar}\int
- \left[B(\rho_A,\rho_B)+B(\rho_0,\rho_{AB})\right]\dd t.
- \label{eq:complete}
+\Delta_g=\frac{4G}\hbar\int\bigl[B(\rho_A,\rho_B)+B(\rho_0,\rho_{AB})\bigr]dt.
+\label{eq:fullgravity}
 \end{equation}
-Indeed the $z_Az_B$ coefficient of $B(\rho_z,\rho_z)$ is twice the bracket, and the branch invariant multiplies that coefficient by four after the factor $G/2$ in the action is included.
+Indeed the $z_Az_B$ coefficient of $B(\rho_z,\rho_z)$ is twice the bracket, and the branch invariant multiplies that coefficient by four after the factor $G/2$ in the action is included. A shared support translated by a displacement linear in both branch signs generally has $\rho_{AB}\ne0$: its density is a translated function, not a linear function of displacement. Translation invariance makes the isolated support self-energy identical on all four branches. Its two terms in Eq.~\eqref{eq:fullgravity} therefore cancel exactly. Keeping only the pair of differential support densities would create a spurious self-phase.
 
-A shared support translated by a displacement linear in both branch signs generally has $\rho_{AB}\ne0$: its density is a translated function, not a linear function of displacement. Translation invariance makes the isolated support self-energy identical on all four branches. Its two terms in Eq.~\eqref{eq:complete} therefore cancel exactly. Keeping only the pair of differential support densities would create a spurious self-phase.
-
-There is also an exact tidal bound for a rigid support. Let $\Phi_R$ be its potential in its own coordinates and let $K_i$ bound $\norm{\nabla\nabla\Phi_R}_{\rm op}$ throughout the branch rectangle sampled by body $i$. Its recoil displacement is that following Eq.~\eqref{eq:freephase}. For the two test--support interactions,
-\begin{align}
- |\Delta_{g,R}|\le{}&\frac{m_A m_B}{M\hbar}\int |d_A d_B|\nonumber\\
- &\times\bigl[(1+m_A/M)K_A+(1+m_B/M)K_B\bigr]\dd t.
- \label{eq:tidal}
-\end{align}
-To prove it, apply the two-variable fundamental theorem of calculus to $\Phi_R(x+z_Aa+z_Bb)$. Its branch double difference is $\int_{-1}^1\int_{-1}^1a^T\nabla\nabla\Phi_R(x+sa+tb)b\dd s\dd t$, whose magnitude is at most $4K|a||b|$. For body $A$, the two displacements are $(1+m_A/M)d_A/2$ and $m_Bd_B/(2M)$; interchange labels for body $B$. Multiplication by the body's mass and integration prove Eq.~\eqref{eq:tidal}. Finite density profiles can be averaged with the same bound.
-
-An affine potential contributes zero. For an external spherical support, $K_i\le2GM/h^3$ when the sampled distances from its center are at least $h$. For equal masses and splittings, Eq.~\eqref{eq:tidal} becomes
+There is also an exact tidal bound for a rigid support. Let $\Phi_R$ be its potential in its own coordinates and let $K_i$ bound $\norm{\nabla\nabla\Phi_R}_{\rm op}$ throughout the branch rectangle sampled by body $i$. Its recoil displacement is Eq.~\eqref{eq:displacement}. For the two test--support interactions,
 \begin{equation}
- |\Delta_{g,R}|\le\frac{4Gm^2}{\hbar h^3}(1+m/M)\int d^2\dd t.
+\begin{split}
+|\Delta_{g,R}|\le\frac{m_Am_B}{M\hbar}\int |d_Ad_B|\bigl[&(1+m_A/M)K_A\\
++&(1+m_B/M)K_B\bigr]dt.
+\end{split}
+\label{eq:tidalbound}
+\end{equation}
+To prove it, apply the two-variable fundamental theorem of calculus to $\Phi_R(x+z_Aa+z_Bb)$. Its branch double difference is $\int_{-1}^1\int_{-1}^1 a^{\mathsf T}\nabla\nabla\Phi_R(x+sa+tb)b\,ds\,dt$, whose magnitude is at most $4K|a||b|$. For body $A$, the two displacements are $(1+m_A/M)d_A/2$ and $m_Bd_B/(2M)$; interchange labels for body $B$. Multiplication by the body's mass and integration prove Eq.~\eqref{eq:tidalbound}. Finite density profiles can be averaged with the same bound.
+
+An affine potential contributes zero. For an external spherical support, $K_i\le2GM/h^3$ when the sampled distances from its center are at least $h$. For equal masses and splittings, Eq.~\eqref{eq:tidalbound} becomes
+\begin{equation}
+|\Delta_{g,R}|\le\frac{4Gm^2}{\hbar h^3}(1+m/M)\int d^2\,dt.
+\label{eq:sphericalbound}
 \end{equation}
 The cancellation of $M$ in this leading bound distinguishes a heavy support from a spatially homogeneous support field. Global monopole and dipole closure constrains the external far field, not the internal interaction of nearby parts of a common apparatus. In particular, the $R^{-3}$ small-splitting coefficient in Eq.~\eqref{eq:gravity} is not replaced by a universal $R^{-5}$ law.
 
 For a conserved relativistic completion, a linearized gauge transformation $h_{\mu\nu}\mapsto h_{\mu\nu}+2\partial_{(\mu}\xi_{\nu)}$ changes the source coupling by
 \begin{equation}
- \delta S_I=\int T^{\mu\nu}\partial_\mu\xi_\nu\dd^4x
- =-\int\xi_\nu\partial_\mu T^{\mu\nu}\dd^4x=0
+\delta S_I=\int T^{\mu\nu}\partial_\mu\xi_\nu\,d^4x
+=-\int\xi_\nu\partial_\mu T^{\mu\nu}\,d^4x=0
+\label{eq:Ward}
 \end{equation}
-when boundary terms vanish. This Ward identity~\cite{DSW,Christodoulou} preserves the gauge independence of the complete source. It does not bound its material cross susceptibility or permit dropping the mixed source coefficient.
+when boundary terms vanish. This Ward identity \cite{Danielson,Christodoulou} preserves the gauge independence of the complete source. It does not bound its material cross susceptibility or permit dropping the mixed source coefficient.
 
-\section{Numerical evaluation and reproducibility}\label{app:numeric}
+\section{Numerical evaluation and reproducibility}\label{app:numerics}
 All response evaluations use the force defined by Eq.~\eqref{eq:pulse}. The damped test calculation solves the scaled causal initial-value equations
-\begin{gather}
- \ddot q_j+2\gamma\dot q_j+\Omega^2q_j=f_j/M,\nonumber\\
- q_j(0)=\dot q_j(0)=0,\qquad\gamma=\zeta\Omega,
-\end{gather}
-and integrates $f_iq_j$. Zero-force intervals use the exact matrix exponential. Scaling the equations prevents microscopic forces from being compared with unit absolute tolerances.
-
-A separate exact-segment method checks that numerical solution. If $f(t)=\sum_j f_jt^j$, a polynomial particular solution $p(t)=\sum_j p_jt^j$ for unit mass satisfies the backward recurrence
 \begin{equation}
- p_j=\frac{f_j-2\gamma(j+1)p_{j+1}-(j+2)(j+1)p_{j+2}}{\Omega^2},
+\begin{gathered}
+\ddot q_j+2\gamma\dot q_j+\Omega^2q_j=f_j/M,\\
+q_j(0)=\dot q_j(0)=0,\qquad\gamma=\zeta\Omega,
+\end{gathered}
+\label{eq:ode}
+\end{equation}
+and integrates $f_iq_j$. Scaling the equations prevents microscopic forces from being compared with unit absolute tolerances.
+
+A separate exact-segment method checks that numerical solution. If $f(t)=\sum_j f_jt^j$, a polynomial particular solution $p(t)=\sum_jp_jt^j$ for unit mass satisfies the backward recurrence
+\begin{equation}
+p_j=\frac{f_j-2\gamma(j+1)p_{j+1}-(j+2)(j+1)p_{j+2}}{\Omega^2},
+\label{eq:recurrence}
 \end{equation}
 with coefficients beyond the force degree zero. Coefficient comparison proves the recurrence. The homogeneous solution is $e^{-\gamma t}(a\cos\omega_dt+b\sin\omega_dt)$, with $\omega_d^2=\Omega^2-\gamma^2$ and coefficients fixed by continuity of $q,\dot q$. The action uses polynomial integrals and
 \begin{equation}
- E_0=\frac{e^{zL}-1}{z},\qquad
- E_n=\frac{L^ne^{zL}}{z}-\frac n z E_{n-1},
+E_0=\frac{e^{zL}-1}{z},\qquad E_n=\frac{L^ne^{zL}}z-\frac nz E_{n-1},
+\label{eq:expintegrals}
 \end{equation}
-where $z=-\gamma+i\omega_d$. These formulas follow by integration by parts for $E_n=\int_0^Lt^ne^{zt}\dd t$. Outward interval evaluation at 70 decimal places supplies the null bounds in Appendix~\ref{app:calibration}; those bounds enclose rounding in the nominal model, not mounting uncertainty.
+where $z=-\gamma+i\omega_d$ and $L$ is the segment duration. These formulas follow by integration by parts for $E_n=\int_0^L t^ne^{zt}\,dt$. Outward interval evaluation at 70 decimal places supplies the null bounds in Appendix~\ref{app:replay}; those bounds enclose rounding in the nominal model, not mounting uncertainty.
 
-For the undamped clamped-link modes, the particular solution is the finite sum
+For undamped clamped-link modes, the particular solution is the finite sum
 \begin{equation}
- p(t)=\sum_{k\ge0}\frac{(-1)^k f^{(2k)}(t)}{\omega^{2k+2}}.
+p(t)=\sum_{k\ge0}\frac{(-1)^k f^{(2k)}(t)}{\omega^{2k+2}}.
+\label{eq:undampedparticular}
 \end{equation}
-Differentiation makes its terms telescope to $p''+\omega^2p=f$. Continuous homogeneous sine and cosine terms are propagated between polynomial segments. This avoids resolving every fast mode by a time mesh. At small $\omega\tau$, an independent arbitrary-precision implementation avoids cancellation among the particular-solution coefficients.
+Differentiation makes its terms telescope to $p''+\omega^2p=f$. Continuous homogeneous sine and cosine terms propagate between polynomial segments, without resolving every fast mode by a time mesh. The Fourier amplitudes in Eq.~\eqref{eq:thermalV} are evaluated by Eq.~\eqref{eq:expintegrals} with $z=i\omega$; arbitrary precision controls cancellation among the polynomial terms.
 
-The clamped-link covariance at an assumed thermal temperature follows Eq.~\eqref{eq:thermal} with sine-mode port coefficients. The first $N=300$ modes at $293$ K give $\tr V=0.00126983$ for the $1$ ms short pulse. Its omitted trace is at most
-\begin{align}
- B_{S,>N}=\frac{2\norm{\ddot f}_1^2}{M\hbar}
- \left[\frac{\zeta(5,N+1)}{\omega_1^5}
- +\frac{2k_B\Theta\,\zeta(6,N+1)}{\hbar\omega_1^6}\right],
-\end{align}
-where the Hurwitz zeta function sums the tail and $M=\varrho A\ell$. The proof is exactly the termwise estimate for Eq.~\eqref{eq:freeRodnoise}; this bound is below $8\times10^{-13}$ for the stated parameters. To see its effect on the witness, put $S=\tr V$. Positivity gives $2|V_{AB}|\le S$, so Eq.~\eqref{eq:visibility} implies
+The clamped-link covariance at an assumed thermal temperature follows Eq.~\eqref{eq:thermalV} with sine-mode port coefficients. The first $N=300$ modes at 293 K give $\tr V=0.00126983$ for the 1 ms short pulse. Its omitted trace is at most
 \begin{equation}
- -\tr(W_s\rho)\le\frac{e^{-4S}-1}{8}
-                  +\frac{|\sin(\Delta/2)|}{2}.
+B_{S,>N}=\frac{2\norm{\ddot f}_1^2}{M\hbar}
+\left[\frac{\zeta(5,N+1)}{\omega_1^5}
++\frac{2k_B\Theta\,\zeta(6,N+1)}{\hbar\omega_1^6}\right],
+\label{eq:tail}
+\end{equation}
+where the Hurwitz zeta function sums the tail and $M=\varrho A\ell$. The proof is exactly the termwise estimate for Eq.~\eqref{eq:noisebound}; this bound is below $8\times10^{-13}$ for the stated parameters. To see its effect on the witness, put $S=\tr V$. Positivity gives $2|V_{AB}|\le S$, so Eq.~\eqref{eq:noisywitness} implies
+\begin{equation}
+-\tr(W_s\rho)\le\frac{e^{-4S}-1}{8}+\frac{|\sin(\Delta/2)|}{2}.
+\label{eq:nowitness}
 \end{equation}
 Here $\Delta$ includes the specified coherent phases. Indeed, $v_++v_-=2e^{-2S}\cosh(4V_{AB})\le1+e^{-4S}$ and $v_A+v_B\le2$. At the calculated covariance this upper bound is negative for either the mechanical or gravitational reference, and for their sum. The particular room-temperature comparison therefore does not certify a visible entanglement signal. The response-only certificate remains valid independently of that covariance.
 
-The main short-pulse phase interval does not rely on the mode truncation. Equations~\eqref{eq:explicitbarbound} and \eqref{eq:barC}, with the exact polynomial constants, give it directly. The test-pair phase for the short geometry is enclosed analytically between $2Gm^2d_0^2H_{\rm eff}/(\hbar R^3)$ and that value divided by $1-d_0^2/R^2$. These enclosures prove the outward-rounded ratio interval in the main text. The archive checks them with interval arithmetic. Other tabulated phases are converged quadrature or ordinary differential equation evaluations of the explicitly specified source models.
+The main short-pulse phase interval does not rely on the mode truncation. Equations~\eqref{eq:explicitgap} and \eqref{eq:rodC}, with the exact polynomial constants, give it directly. The test-pair phase magnitude for the short geometry is enclosed analytically between $2Gm^2d_0^2H_{\rm eff}/(\hbar R^3)$ and that value divided by $1-d_0^2/R^2$. These enclosures prove the outward-rounded ratio interval in the main text. Other tabulated phases are converged quadrature or ordinary differential equation evaluations of the explicitly specified source models.
 
-The code tests the Gaussian channel against oscillator displacement operators, the spectator-system distance bound, force closure, exact pulse norms, response quadratures, static Green functions, passive inequalities, and the finite-gap remainder. Native \texttt{pgfplots} reads the generated numerical data; the port drawing and the proof circuit are native \LaTeX. The archive includes the executed logs and commands needed to regenerate the paper.
+The accompanying code evaluates these quantities and checks the polynomial identities symbolically. It also compares the Gaussian channel with oscillator displacement operators, tests the spectator-system bound and physical interpolation, compares the null actions with direct time-domain integration, and checks the static Green function and passive inequalities. These finite tests supplement the analytic proofs. Native pgfplots reads the generated numerical data; the port drawing and interpolation diagram are native \LaTeX. The archive includes execution logs and commands to regenerate the paper.

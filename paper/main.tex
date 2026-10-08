@@ -1,154 +1,154 @@
-\documentclass[aps,prd,reprint,amsmath,amssymb,longbibliography,nobibnotes]{revtex4-2}
+% Inline bibliography: compile twice with pdflatex, or use latexmk -bibtex- -pdf.
+% Preserve the modern LaTeX label before REVTeX installs its legacy version.
+\let\SavedKernelLabel\label
+\documentclass[aps,pra,reprint,amsmath,amssymb,longbibliography,floatfix]{revtex4-2}
 \usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage[utf8]{inputenc}
+\usepackage{bm}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{booktabs}
 \usepackage{microtype}
-\usepackage{bm,amsthm,booktabs,graphicx}
-\usepackage{tikz,pgfplots}
-\usepackage{quantikz}
-% Compatibility with the current LaTeX label hooks and REVTeX 4.2.
+% Hyperref expects the modern kernel label with current LaTeX releases.
 \makeatletter
-\@ifl@t@r\fmtversion{2023-06-01}{%
-\def\label#1{\@bsphack
-     \begingroup
-     \UseHookWithArguments{label}{1}{#1}%
-     \protected@write\@auxout{}%
-         {\string\newlabel{#1}{{\@currentlabel}{\thepage}%
-         {\@currentlabelname}{\@currentHref}{\@kernel@reserved@label@data}}}%
-  \endgroup
-  \@esphack}
-\let\ltx@label\label
-}{}
+\@ifl@t@r\fmtversion{2023-06-01}{\let\label\SavedKernelLabel\let\ltx@label\label}{}
 \makeatother
 \usepackage[hidelinks]{hyperref}
-\hypersetup{pdftitle={Mechanical mediation through shared apparatus in gravitational-entanglement experiments},pdfauthor={Samuel Mausberg},pdfsubject={Physical Review D manuscript}}
-\usetikzlibrary{arrows.meta,decorations.pathmorphing,positioning,calc}
+\usetikzlibrary{arrows.meta,positioning,calc,fit,backgrounds,patterns}
 \usepgfplotslibrary{fillbetween}
 \pgfplotsset{compat=1.18}
-\newcommand{\dd}{\,\mathrm d}
-\newcommand{\tr}{\operatorname{tr}}
-\newcommand{\norm}[1]{\lVert#1\rVert}
-\newcommand{\id}{\operatorname{id}}
-\newcommand{\sgn}{\operatorname{sign}}
-\newcommand{\sep}{\mathrm{sep}}
-\newcommand{\mech}{\mathrm m}
 \newtheorem{theorem}{Theorem}
 \newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{corollary}[theorem]{Corollary}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\sinc}{\operatorname{sinc}}
+\newcommand{\norm}[1]{\lVert#1\rVert}
+\newcommand{\ket}[1]{\lvert#1\rangle}
+\newcommand{\bra}[1]{\langle#1\rvert}
+\newcommand{\DV}{\mathcal D_V}
+\newcommand{\wt}[1]{\widetilde{#1}}
 \begin{document}
 \title{Mechanical mediation through shared apparatus in gravitational-entanglement experiments}
 \author{Samuel Mausberg}
 \affiliation{Independent Researcher}
 \date{October 3, 2026}
 \begin{abstract}
-Can a shared support create the entanglement attributed to gravity? In a linear Gaussian apparatus, two force-weighted cross responses bound the complete two-record channel's distance from separability-preserving noise. We derive a classical calibration with explicit errors and a local control that nulls both responses. For passive mounts, finite-time compliance bounds require no frequency cutoff; a spectral gap also gives a controlled elastic approximation. When gravity accumulates mainly during a hold, the allowable pulse-weighted compliance scales as the cube of the ramp time. A specified clamped horizontal link gives a mechanical phase comparable to a millisecond-ramp gravitational reference, but negligible for long ramps. The result is a measurable design rule, not a contamination estimate for an uncharacterized instrument. Coherent apparatus return, small displacement, and a large support mass do not replace this calibration.
+Can the support shared by two matter-wave interferometers entangle their path-recording spins, even when its final motion records neither path? It can. For prescribed forces coupled to a linear Gaussian apparatus, we bound the resulting spin channel by two force-weighted cross responses. Classical force replay measures the bound; local pulse changes can null both responses. For passive mounts, finite-time bounds on static compliances cover every mechanical mode, and a spectral gap gives a controlled elastic approximation. When gravity acts mainly during a hold, the permissible pulse-weighted compliance scales as the cube of the ramp time. A specified clamped horizontal link produces a phase comparable to a millisecond-ramp gravitational reference, but negligible for long ramps. These results provide a calibration criterion for excluding a mechanical entangling channel, rather than a contamination estimate for an uncharacterized instrument.
 \end{abstract}
 \maketitle
+\raggedbottom
 
 \section{Introduction}
-The apparatus that splits a matter wave receives a reaction force. If two interferometers use the same support, can that support generate the entanglement intended to witness gravity? It can, even when its final motion contains no record of either path. The relevant experimental question is therefore how much of this additional channel survives the actual force sequence. This paper answers it through a force-to-displacement cross response, rather than an assigned recoil mass or an assumed fringe visibility.
+The apparatus that splits a matter wave receives a reaction force. If two interferometers use the same support, can that support generate the entanglement intended to witness gravity? It can, even when its final motion contains no record of either path. The relevant experimental question is therefore how much of this additional channel survives the actual force sequence. This paper answers it through a force-to-displacement cross response, rather than an assigned recoil mass or an assumed fringe visibility. The internal two-state systems that record the paths will be called the records.
 
 For a linear Gaussian apparatus, two pulse-weighted cross responses bound the entire mechanical record channel. They can be measured by replaying amplified classical forces at the same work-conjugate ports. Nulling both responses removes the entangling part by changing local controls. We also derive a conservative passive-mount certificate from static compliances, including all modes. These three results turn the mechanical background into an acceptance test with explicit constants.
 
 Rapid splitting makes the test more demanding. For a stiff response and a fixed gravitational holding time, the allowed pulse-weighted compliance falls as the cube of the ramp time. The test mass and splitting amplitude cancel from the leading phase ratio. Thus small superpositions alone are not the problem; the potentially costly choice is preparing them rapidly while allowing little time for gravity to act. A specified horizontal elastic link illustrates this distinction without identifying a vertical table mode with an unknown interferometer cross response.
 
-The original proposals by Bose et al.\ and Marletto and Vedral require other entangling interactions to be excluded or bounded~\cite{Bose,MV}. Apparatus effects have since been studied from several directions. Danielson, Satishchandran, and Wald include the compensating laboratory dipole~\cite{DSW}. C\'eleri, Soares-Pinto, and Vanzella analyze recoil during preparation, recoverable coherence, and acoustic limits on the participating apparatus~\cite{Celeri}. Gunnink et al.\ calculate gravitational entanglement with heavy apparatus oscillators~\cite{Gunnink}. Casimir-screening analyses include surface forces and bound branch-dependent plate deflection and its effect on path coherence~\cite{Kamp,Schut}. Williams's constrained-motion proposal assumes independent mechanical supports~\cite{Williams}. These works motivate identifying the actual material connection rather than treating its absence as automatic.
+The original proposals by Bose et al.\ and Marletto and Vedral require other entangling interactions to be excluded or bounded \cite{Bose,Marletto}. Apparatus effects have since been studied from several directions. Danielson, Satishchandran, and Wald include the compensating laboratory dipole \cite{Danielson}. C\'eleri, Soares-Pinto, and Vanzella analyze recoil during preparation, recoverable coherence, and acoustic limits on the participating apparatus \cite{Celeri}. Gunnink et al.\ calculate gravitational entanglement with heavy apparatus oscillators \cite{Gunnink}. Casimir-screening analyses include surface forces and bound branch-dependent plate deflection and its effect on path coherence \cite{Kamp,Schut}. Williams's constrained-motion proposal assumes independent mechanical supports \cite{Williams}.
 
-Neither the coherent bus mechanism nor the Gaussian solution is new. Motional gates can return a thermally occupied bus while entangling the controlled systems~\cite{MS}; multiqubit Gaussian noise spectroscopy already relates quantum cross spectra, pulse filters, and induced couplings~\cite{PazSilva}. Our contribution is the channel-distance certificate, its classical force-replay and nulling rules, and finite-time compliance bounds tied to interferometer forces. The result does not require reconstructing the whole noise spectrum.
+Elahi et al.\ propose a shared-apparatus geometry in which two nanodiamonds are trapped on opposite sides of a microfabricated chip \cite{Elahi}. They identify vibrational noise transmitted through the chip's mechanical supports and discuss possible isolation strategies. A detailed noise analysis and the design of the Stern-Gerlach pulse sequence remain for future work. Their proposal does not quantify entanglement mediated by the chip's branch-dependent elastic response. Once the relevant force sequence is specified, the criterion derived here applies to that response.
+
+Neither the coherent bus mechanism nor the Gaussian solution is new. Motional gates can return a thermally occupied bus while entangling the controlled systems \cite{Molmer}; multiqubit Gaussian noise spectroscopy already relates quantum cross spectra, pulse filters, and induced couplings \cite{PazSilva}. Our contribution is the channel-distance certificate, its classical force-replay and nulling rules, and finite-time compliance bounds tied to interferometer forces. The result does not require reconstructing the whole noise spectrum.
 
 We carry the nominal long-pulse geometry of Bose et al.\ through the calculation. Its test-pair phase is $-0.3612$ rad for the smooth pulse specified below. We then compare its compliance requirement with a short-ramp completion of a constrained geometry. The comparison distinguishes a published geometry, a chosen pulse, and a specified mounting model throughout.
 
 \section{From closed recoil to a measured response}
 \subsection{Why coherent return is insufficient}
-A simple exactly soluble case isolates the effect before any mounting approximation is made. Two test bodies of masses $m_A,m_B$ receive forces $z_i a_i(t)$ from a common free support of mass $M$, where $z_i=\pm1$ labels an internal record. Their positions are $x_i$, the support position is $X$, and their canonical momenta are $p_i,P$. Consider
+A simple exactly soluble case isolates the effect before any mounting approximation is made. Two test bodies of masses $m_A,m_B$ receive forces $z_i a_i(t)$ from a common free support of mass $M$, where $z_i=\pm1$ is the eigenvalue of the record's Pauli operator $Z_i$. Their positions are $x_i$, the support position is $X$, and their canonical momenta are $p_i,P$. Consider
 \begin{equation}
- H_0=\sum_{i=A,B}\frac{p_i^2}{2m_i}+\frac{P^2}{2M}
-       -\sum_{i=A,B}Z_i a_i(t)(x_i-X).
- \label{eq:freeH}
+H_0=\sum_{i=A,B}\frac{p_i^2}{2m_i}+\frac{P^2}{2M}-\sum_{i=A,B}Z_i a_i(t)(x_i-X).
+\label{eq:freeH}
 \end{equation}
 The force and reaction sum to zero. Let $d_i(t)$ be the full inertial branch separation, so that $a_i=m_i\ddot d_i/2$. Assume $d_i=\dot d_i=0$ at both ends of the cycle. Up to global and local record phases, the final unitary is
-\begin{align}
- U(T)&=U_{\rm free}(T)e^{i\Delta_{\rm rec}Z_AZ_B/4},\nonumber\\
- \Delta_{\rm rec}&=-\frac{m_A m_B}{M\hbar}
-                   \int_0^T\dot d_A(t)\dot d_B(t)\dd t .
- \label{eq:freephase}
-\end{align}
-This factorization holds for every initial motional state. It follows because linear-force commutators are scalars: the Magnus expansion stops at second order, closure removes displacement operators, and two integrations by parts give Eq.~\eqref{eq:freephase}. Appendix~\ref{app:elastic} gives the proof and a causal elastic completion.
+\begin{equation}
+\begin{split}
+U(T)&=U_{\rm free}(T)e^{i\Delta_{\rm rec}Z_AZ_B/4},\\
+\Delta_{\rm rec}&=-\frac{m_A m_B}{M\hbar}\int_0^T\dot d_A(t)\dot d_B(t)\,dt.
+\end{split}
+\label{eq:recoil}
+\end{equation}
+This factorization holds for every initial motional state. It follows because linear-force commutators are scalars: the Magnus expansion stops at second order, closure removes displacement operators, and two integrations by parts give Eq.~\eqref{eq:recoil}. Appendix~\ref{app:free} gives the proof and a causal elastic completion.
 
 The support displacement can be tiny while its phase is appreciable. It equals
 \begin{equation}
- X_z-X_{\rm free}=-\frac{m_Az_Ad_A+m_Bz_Bd_B}{2M}.
+X_z-X_{\rm free}=-\frac{m_Az_A d_A+m_Bz_Bd_B}{2M}.
+\label{eq:displacement}
 \end{equation}
-For initial $|++\rangle$, with each $+$ an $X$ eigenstate, the ideal record negativity is $|\sin(\Delta_{\rm rec}/2)|/2$. The free-ended elastic model in Appendix~\ref{app:elastic} gives negativity above $0.49998$ with gravity absent. Its error bound includes every mode, so the example does not rely on an instantaneous rigid propagator.
+For initial $\ket{++}$, with each $+$ an $X$ eigenstate, the ideal record negativity is $|\sin(\Delta_{\rm rec}/2)|/2$. The free-ended elastic model in Appendix~\ref{app:free} gives negativity above $0.49998$ with gravity absent. Its error bound includes every mode, so the example does not rely on an instantaneous rigid propagator.
 
-Equation~\eqref{eq:freephase} also gives an exact special-purpose control: nonoverlapping branch velocities cancel free translation. A mounted apparatus can remember earlier forces, so that control need not cancel its full channel. We now replace the free mass by its measurable response.
+Equation~\eqref{eq:recoil} also gives an exact special-purpose control: nonoverlapping branch velocities cancel free translation. A mounted apparatus can remember earlier forces, so that control need not cancel its full channel. We now replace the free mass by its measurable response.
 
 \subsection{Force ports and model assumptions}
-The records have commuting Pauli operators $Z_A,Z_B$. A mechanical port coordinate $q_i$ is defined by work: an applied force $F_i$ contributes $-F_iq_i$ to the Hamiltonian. For an extended actuator, $q_i$ is the displacement averaged against its actual force distribution. After branch-independent forces are included in the reference trajectory, the interaction is
+The two record operators commute. A mechanical port coordinate $q_i$ is defined by work: an applied force $F_i$ contributes $-F_iq_i$ to the Hamiltonian. For an extended actuator, $q_i$ is the displacement averaged against its actual force distribution. After branch-independent forces are included in the reference trajectory, the interaction is
 \begin{equation}
- H_I(t)=-Z_A f_A(t)q_A(t)-Z_B f_B(t)q_B(t).
- \label{eq:HI}
+H_I(t)=-Z_A f_A(t)q_A(t)-Z_B f_B(t)q_B(t).
+\label{eq:HI}
 \end{equation}
 Here $f_i$ is half the difference between the two forces on the apparatus. For Eq.~\eqref{eq:freeH}, $f_i=-a_i$. Multiple force locations and directions are retained by replacing each product by a vector contraction; the two record labels do not change.
 
-We assume quadratic dynamics for the apparatus together with its damping reservoir, linear canonical port observables, and an initial Gaussian reservoir state independent of the records. The forces are prescribed nondemolition controls and all smeared covariances converge. A nonzero mean displacement produces local record phases, which are calibrated away. These assumptions allow a continuum of modes, correlated fluctuations, memory, and time-dependent linear dynamics. Neither weak coupling nor a Markov approximation is required.
+The loads must be obtained from the branch-dependent interaction, not from the test body's acceleration alone. For prescribed paths with interaction energies $U_{i,+}$ and $U_{i,-}$, a retained apparatus coordinate $q_\alpha$ has load $f_{i\alpha}= -\tfrac12\partial_{q_\alpha}(U_{i,+}-U_{i,-})$ at the reference configuration. In a magnetic splitter this includes the reaction on the field sources and their supports. Confining forces can also load an anchor during a hold. Forces at different locations, and torques with their conjugate angles, must be kept separately even when their resultant vanishes.
 
-Since the commutator is a scalar, the retarded response is
-\begin{equation}
- \chi_{ij}(t,s)=\frac{i}{\hbar}\vartheta(t-s)[q_i(t),q_j(s)].
- \label{eq:chi}
-\end{equation}
-It is also the exact change of mean displacement per classical applied force. A seismic transmissibility, relating base displacement to table displacement, is not this response. Nor is displacement at an arbitrary pickup necessarily the work-conjugate $q_i$.
-
-Define the two directed cross actions
-\begin{equation}
- I_{ij}=\int_0^T f_i(t)\int_0^t\chi_{ij}(t,s)f_j(s)\dd s\dd t,
- \qquad i\ne j.\label{eq:I}
-\end{equation}
-Their sum and difference determine distinct phases in the record channel:
-\begin{equation}
- \Delta_m=\frac{2(I_{AB}+I_{BA})}{\hbar},\qquad
- \sigma=\frac{I_{AB}-I_{BA}}{2\hbar}.
- \label{eq:phases}
-\end{equation}
-The first is a coherent $Z_AZ_B$ phase. The second appears in the reservoir overlap between different record histories. Reciprocity of the stationary response does not make the two actions equal for unequal pulse timings.
+We assume quadratic dynamics for the apparatus together with its damping reservoir, linear canonical port observables, and an initially Gaussian state of all these traced-out degrees of freedom, independent of the records and any spectator. The forces are prescribed nondemolition controls, meaning that they do not change the record labels, and all smeared covariances converge. We subtract the mean port motion and calibrate the resulting local record phases. These assumptions allow a continuum of modes, correlated fluctuations, memory, and time-dependent linear dynamics. Neither weak coupling nor a Markov approximation is required.
 
 \begin{figure}[t]
 \centering
-\begin{tikzpicture}[>=Latex,font=\small,x=1cm,y=1cm]
-\draw[rounded corners] (0,0) rectangle (7.7,1.35);
-\node at (3.85,.25) {support, clamps, and damping reservoir};
-\fill (1.4,.95) circle(.055);\fill (6.2,.95) circle(.055);
-\node[below] at (1.4,.9) {$q_A$};\node[below] at (6.2,.9) {$q_B$};
-\draw[->,thick] (1.4,2.05)--(1.4,1.02) node[midway,left] {$f_A$};
-\draw[->,thick] (6.2,2.05)--(6.2,1.02) node[midway,right] {$f_B$};
-\node[above] at (1.4,2.05) {record $A$};\node[above] at (6.2,2.05) {record $B$};
-\draw[->] (1.7,1.72)--(5.9,1.72) node[midway,above] {replay $A$, read $B$};
-\draw[<-] (1.7,-.38)--(5.9,-.38) node[midway,below] {replay $B$, read $A$};
+\begin{tikzpicture}[x=1cm,y=1cm,>=Latex,font=\footnotesize]
+\draw[rounded corners,fill=black!4] (0,0) rectangle (7.5,1.65);
+\node at (3.75,1.35) {support, clamps, and damping reservoir};
+\node[draw,circle,fill=white,inner sep=3pt] (a) at (1.25,.6) {$q_A$};
+\node[draw,circle,fill=white,inner sep=3pt] (b) at (6.25,.6) {$q_B$};
+\node (ra) at (1.25,-.8) {record $A$};
+\node (rb) at (6.25,-.8) {record $B$};
+\draw[->] (ra) -- node[left] {$f_A$} (a);
+\draw[->] (rb) -- node[right] {$f_B$} (b);
+\draw[->] (1.8,.83) -- node[above,font=\scriptsize] {replay $A$, read $B$} (5.7,.83);
+\draw[<-] (1.8,.35) -- node[below,font=\scriptsize] {replay $B$, read $A$} (5.7,.35);
 \end{tikzpicture}
 \caption{The relevant mechanical connection is measured at the actual force distributions. Both directed actions integrate the observed cross displacement against the other interferometer's force. Material stiffness, damping, and attachment to a frame enter through this response.}
 \label{fig:ports}
 \end{figure}
 
+Since the commutator is a scalar, the retarded response is
+\begin{equation}
+\chi_{ij}(t,s)=\frac{i}{\hbar}\vartheta(t-s)[q_i(t),q_j(s)],
+\label{eq:chi}
+\end{equation}
+where $\vartheta$ is the Heaviside function. It is also the exact change of mean displacement per classical applied force. A seismic transmissibility, relating base displacement to table displacement, is not this response. Nor is displacement at an arbitrary pickup necessarily the work-conjugate $q_i$.
+
+Define the two directed cross actions
+\begin{equation}
+I_{ij}=\int_0^T f_i(t)\int_0^t\chi_{ij}(t,s)f_j(s)\,ds\,dt,\qquad i\ne j.
+\label{eq:actions}
+\end{equation}
+Their sum and difference determine distinct phases in the record channel:
+\begin{equation}
+\Delta_m=\frac{2(I_{AB}+I_{BA})}{\hbar},\qquad
+\sigma=\frac{I_{AB}-I_{BA}}{2\hbar}.
+\label{eq:phases}
+\end{equation}
+The first is a coherent $Z_AZ_B$ phase. The second appears in the reservoir overlap between different record histories. Reciprocity of the stationary response does not make the two actions equal for unequal pulse timings.
+
 \subsection{A bound on the complete record channel}
 A phase fit alone cannot distinguish an entangling response from correlated noise. To make that distinction, set
 \begin{equation}
- Q_i=\hbar^{-1}\int_0^T f_i(t)q_i(t)\dd t,\qquad
- V_{ij}=\tfrac12\langle Q_iQ_j+Q_jQ_i\rangle.
- \label{eq:V}
+Q_i=\hbar^{-1}\int_0^T f_i(t)q_i(t)\,dt,\qquad
+V_{ij}=\tfrac12\langle Q_iQ_j+Q_jQ_i\rangle.
+\label{eq:V}
 \end{equation}
-Let $\mathcal D_V$ average the product unitary $e^{i(\xi_A Z_A+\xi_B Z_B)}$ over a centered classical Gaussian variable $\xi$ of covariance $V$. This channel can erase coherence but cannot entangle separable records.
+Let $\DV$ average the product unitary $e^{i(\xi_AZ_A+\xi_BZ_B)}$ over a centered classical Gaussian variable $\xi$ of covariance $V$. This channel can erase coherence but cannot entangle separable records.
 
-\begin{theorem}[Response certificate]\label{thm:response}
+\begin{theorem}[Response certificate]
 Under the assumptions above, the final mechanical record channel $\Phi$ satisfies, for every input state $\rho$ and any spectator system,
 \begin{equation}
- \begin{split}
- D\bigl[(\Phi\otimes\id)(\rho),{}&
- (\mathcal D_V\otimes\id)(\rho)\bigr]\le\beta,
- \end{split}\label{eq:distance}
+D\bigl((\Phi\otimes\id)(\rho),(\DV\otimes\id)(\rho)\bigr)\le\beta,
+\label{eq:certificate}
 \end{equation}
 \begin{equation}
- \beta=\min\left\{1,\frac{\max(|I_{AB}|,|I_{BA}|)}{\hbar}\right\}.
- \label{eq:beta}
+\beta=\min\left\{1,\frac{\max(|I_{AB}|,|I_{BA}|)}{\hbar}\right\}.
+\label{eq:beta}
 \end{equation}
 Here $D(\rho,\rho')=\norm{\rho-\rho'}_1/2$. No value of $V$ is needed to evaluate the bound.
 \end{theorem}
@@ -157,16 +157,18 @@ The proof in Appendix~\ref{app:channel} keeps both phases in Eq.~\eqref{eq:phase
 
 This result supplies an operational mechanical-only null. For a fixed sign $s=\pm1$, the witness
 \begin{equation}
- W_s=\frac{I-X_AX_B+s(Y_AZ_B+Z_AY_B)}4
- \label{eq:witness}
+W_s=\frac{I-X_AX_B+s(Y_AZ_B+Z_AY_B)}4
+\label{eq:witness}
 \end{equation}
 has nonnegative expectation on separable states and spectral range one. Thus initially separable records, with gravity and other entangling channels absent, obey
 \begin{equation}
- -\tr(W_s\Phi(\rho_{\sep}))\le\beta.\label{eq:false}
+-\tr\bigl(W_s\Phi(\rho_{\rm sep})\bigr)\le\beta.
+\label{eq:falsepositive}
 \end{equation}
-For comparison, $e^{i\Delta_gZ_AZ_B/4}|++\rangle$ gives
+For comparison, $e^{i\Delta_g Z_AZ_B/4}\ket{++}$ gives
 \begin{equation}
- w_g=\frac{|\sin(\Delta_g/2)|}{2}\label{eq:wg}
+w_g=\frac{|\sin(\Delta_g/2)|}{2}
+\label{eq:wg}
 \end{equation}
 with the matching sign. Allocating a fraction $\eta$ of this ideal signal to mechanics means requiring $\beta\le\eta w_g$. This bounds a false positive; it does not assume that the ideal signal survives noise.
 
@@ -174,142 +176,143 @@ with the matching sign. Allocating a fraction $\eta$ of this ideal signal to mec
 \subsection{Replay the force, not the seismic disturbance}
 The channel certificate becomes useful when the same actions can be measured without resolving a single branch's minute displacement. Apply an amplified force $\lambda_j f_j$ at port $j$, with the other branch-dependent force off, and measure the baseline-subtracted cross displacement $y_{i\leftarrow j}$. The apparatus configuration, controller setting, and spatial force profile are unchanged. Linearity gives
 \begin{equation}
- \widehat I_{ij}=\frac1{\lambda_j}\int_0^T f_i(t)y_{i\leftarrow j}(t)\dd t.
- \label{eq:replay}
+\widehat I_{ij}=\frac1{\lambda_j}\int_0^T f_i(t)y_{i\leftarrow j}(t)\,dt.
+\label{eq:replay}
 \end{equation}
-The gain is admissible only over a verified linear range.
+The gain is admissible only over a verified linear range. Increasing a splitter's current does not by itself implement this replay: it can change the trap stiffness or the force distribution. The calibrated drive must reproduce the differential load, including any retained force and torque components.
 
-If the complete displacement error satisfies $\norm{\delta y_{ij}}_\infty\le\delta y_{ij}^{\max}$, H\"older's inequality gives
-\begin{align}
- e_{ij}&=\frac{\norm{f_i}_1\delta y_{ij}^{\max}}{|\lambda_j|},\nonumber\\
- \beta_{\rm cal}&=\min\left\{1,
- \frac{\max_{i\ne j}(|\widehat I_{ij}|+e_{ij})}{\hbar}\right\}.
- \label{eq:cal}
-\end{align}
+The norms below are time-domain $L^p$ norms. If the complete displacement error satisfies $\norm{\delta y_{ij}}_\infty\le\delta y_{ij}^{\max}$, H\"older's inequality gives
+\begin{equation}
+\begin{split}
+e_{ij}&=\frac{\norm{f_i}_1\delta y_{ij}^{\max}}{|\lambda_j|},\\
+\beta_{\rm cal}&=\min\left\{1,\frac{\max_{i\ne j}(|\widehat I_{ij}|+e_{ij})}{\hbar}\right\}.
+\end{split}
+\label{eq:calerror}
+\end{equation}
 For an $L^2$ displacement-error bound $\epsilon_{ij}$, use
 \begin{equation}
- e_{ij}=\norm{f_i}_2\epsilon_{ij}/|\lambda_j|.
+e_{ij}=\norm{f_i}_2\epsilon_{ij}/|\lambda_j|.
+\label{eq:l2error}
 \end{equation}
-The error includes baseline subtraction, gain, drift, sensor bandwidth, and admitted departure from linearity. Appendix~\ref{app:calibration} adds force-waveform errors and finite-sample witness uncertainty. A finite measured frequency band cannot silently replace an all-frequency response.
+The error includes baseline subtraction, gain, drift, sensor bandwidth, and admitted departure from linearity. Appendix~\ref{app:replay} adds force-waveform errors and finite-sample witness uncertainty. A finite measured frequency band cannot silently replace an all-frequency response.
 
 For the running example we choose the smooth opening profile
 \begin{equation}
- d(t)=d_0s(t/\tau),\qquad
- s(u)=35u^4-84u^5+70u^6-20u^7,\label{eq:pulse}
+d(t)=d_0s(t/\tau),\qquad s(u)=35u^4-84u^5+70u^6-20u^7,
+\label{eq:pulse}
 \end{equation}
 followed by a hold of duration $H$ and the reversed closing ramp. The source geometry and nominal ramp and hold times follow the explicit scheme of Ref.~\cite{Bose}
-\begin{gather}
- m=10^{-14}\ \mathrm{kg},\quad R=450\ \mu\mathrm m,\quad
- d_0=250\ \mu\mathrm m,\nonumber\\
- \tau=0.5\ \mathrm s,\qquad H=2.5\ \mathrm s.\label{eq:bose}
-\end{gather}
-The polynomial is our endpoint-smooth replacement for the proposal's idealized acceleration sequence. It gives $f=-m\ddot d/2$, $\norm f_1=2.1875\times10^{-17}$ N s, and the test-pair Newtonian phase $\Delta_g=-0.3611838$ rad, including both ramps.
+\begin{equation}
+\begin{gathered}
+m=10^{-14}\ {\rm kg},\quad R=450\ \mu{\rm m},\quad d_0=250\ \mu{\rm m},\\
+\tau=0.5\ {\rm s},\qquad H=2.5\ {\rm s}.
+\end{gathered}
+\label{eq:boseinputs}
+\end{equation}
+The polynomial is our endpoint-smooth replacement for the proposal's idealized acceleration sequence. It gives $f=-m\ddot d/2$, $\norm f_1=2.1875\times10^{-17}\ {\rm N\,s}$, and the test-pair Newtonian phase $\Delta_g=-0.3611838$ rad, including both ramps.
 
-As a specified acceptance target, take $\lambda=10^{11}$ and a complete raw displacement-error bound $0.1$ nm. The peak replay force is $3.76\ \mu$N and $e/\hbar=2.075\times10^{-4}$. A selected $400$ kg free translating capsule, within ZARM's documented loaded-mass range~\cite{ZARM}, gives $\Delta_{\rm rec}=-9.6704\times10^{-4}$ rad. If replay returns these actions, Eq.~\eqref{eq:cal} gives $\beta_{\rm cal}<4.50\times10^{-4}$, below $0.01w_g=8.98\times10^{-4}$. The capsule calculation isolates translation; the replay test, not its nominal mass, must cover the remaining response.
+As a specified acceptance target, take $\lambda=10^{11}$ and a complete raw displacement-error bound $0.1$ nm. The peak replay force is $3.76\ \mu{\rm N}$ and $e/\hbar\simeq2.07430\times10^{-4}$. A specified $400$ kg free translating capsule gives $\Delta_{\rm rec}=-9.6704\times10^{-4}$ rad. If replay returns these actions, Eq.~\eqref{eq:calerror} gives $\beta_{\rm cal}<4.50\times10^{-4}$, below $0.01w_g=8.98\times10^{-4}$. The capsule calculation isolates translation; the replay test, not its nominal mass, must cover the remaining response.
 
 \subsection{Cancel both directed actions}
-Calibration can also specify a control change instead of merely accepting a background. Hold $f_A$ fixed and change the other local force to
+Calibration can also specify a control change instead of merely accepting a background. For a fixed apparatus response, hold $f_A$ fixed and change the other local force to
 \begin{equation}
- f_B=f_{B0}+a_1g_1+a_2g_2,\qquad
- \int g_\ell\dd t=\int t g_\ell\dd t=0.\label{eq:nullpulse}
+f_B=f_{B0}+a_1g_1+a_2g_2,\qquad
+\int g_\ell\,dt=\int t g_\ell\,dt=0.
+\label{eq:loops}
 \end{equation}
-The added loops preserve inertial displacement and momentum closure. Let $b$ contain the two baseline actions, and let column $\ell$ of $\mathsf C$ contain the two actions with $g_\ell$ in place of $f_B$.
+The added loops preserve inertial displacement and momentum closure. Let $b$ contain the two baseline actions, and let column $\ell$ of $C$ contain the two actions with $g_\ell$ in place of $f_B$.
 
-\begin{proposition}[Two-response null]\label{prop:null}
-If $\mathsf C$ is invertible, $a=-\mathsf C^{-1}b$ makes the final mechanical channel exactly $\mathcal D_V$. With measured coefficients, choose $a=-\widehat{\mathsf C}^{-1}\widehat b$. If their entrywise action errors are $e_{b,r}$ and $e_{C,r\ell}$, then
+\begin{proposition}[Two-response null]
+If $C$ is invertible, $a=-C^{-1}b$ makes the final mechanical channel exactly $\DV$, with $V$ evaluated for the modified forces. With measured coefficients, choose $a=-\widehat C^{-1}\widehat b$. If their entrywise action errors are $e_{b,r}$ and $e_{C,r\ell}$, then
 \begin{equation}
- \beta_{\rm null}\le\min\left\{1,\frac1\hbar
- \max_r\left(e_{b,r}+\sum_{\ell=1}^2|a_\ell|e_{C,r\ell}\right)\right\}.
- \label{eq:nullerr}
+\beta_{\rm null}\le\min\left\{1,\frac1\hbar\max_r\left(e_{b,r}+\sum_{\ell=1}^2|a_\ell|e_{C,r\ell}\right)\right\}.
+\label{eq:nullerror}
 \end{equation}
 \end{proposition}
 
-Both actions are linear in $f_B$. Their residual is $b+\mathsf C a$, proving the exact statement and, by a rowwise triangle inequality, the error bound. This is a change of local pulses, not subtraction of an entangling gate from measured data. Correlated dephasing may remain.
+Both actions are linear in $f_B$. Their residual is $b+Ca$, proving the exact statement and, by a rowwise triangle inequality, the error bound. This is a change of local pulses, not subtraction of an entangling gate from measured data. Correlated dephasing may remain; the null does not preserve its original covariance.
 
-A numerical example in Appendix~\ref{app:calibration} uses a damped test response and the Bose pulse. Simply delaying one interferometer by $0.5$ s nulls free recoil but not its two damped actions. Two added loops remove both while retaining $86.5\%$ of the original test-pair gravitational phase. The coefficients are bounded and the corrected branch separation remains between zero and $d_0$. This example illustrates conditioning and pulse closure, rather than assigning the test response to an actual horizontal mount.
+A numerical example in Appendix~\ref{app:replay} uses a damped test response and the Bose pulse. Simply delaying one interferometer by $0.5$ s nulls free recoil but not its two damped actions. Two added loops remove both while retaining $86.5\%$ of the original test-pair gravitational phase. The coefficients are bounded and the corrected branch separation remains between zero and $d_0$. This example illustrates conditioning and pulse closure, rather than assigning the test response to an actual horizontal mount.
 
 \section{Passive compliance and rapid preparation}
 \subsection{A measurable design rule}
-A useful comparison between pulse families should not depend on a guessed platform mass. For stationary response, define the pulse-weighted cross compliance
+A useful comparison between pulse families should not depend on a guessed platform mass. For nonzero forces, define the pulse-weighted cross compliance
 \begin{equation}
- \overline\chi_{ij}=\frac{I_{ij}}{\norm{f_i}_2\norm{f_j}_2}.
- \label{eq:weighted}
+\bar\chi_{ij}=\frac{I_{ij}}{\norm{f_i}_2\norm{f_j}_2}.
+\label{eq:weightedchi}
 \end{equation}
-It has units of m/N and retains the phase cancellations in the actual waveform. The definition also applies to a nonstationary response. Equation~\eqref{eq:beta} gives the sufficient, directly testable requirement
+It has units of m/N and retains the phase cancellations in the actual waveform, for stationary or nonstationary response. Equation~\eqref{eq:beta} gives the sufficient, directly testable requirement
 \begin{equation}
- \max_{i\ne j}|\overline\chi_{ij}|
- \le\frac{\eta\hbar w_g}{\norm{f_A}_2\norm{f_B}_2}.
- \label{eq:design}
+\max_{i\ne j}|\bar\chi_{ij}|\le\frac{\eta\hbar w_g}{\norm{f_A}_2\norm{f_B}_2}.
+\label{eq:budget}
 \end{equation}
-A uniform bound $|\chi_{ij}(\omega)|\le\chi_*$ implies $|\overline\chi_{ij}|\le\chi_*$ by Parseval and Cauchy--Schwarz, but replay is usually less conservative and does not infer a uniform envelope from finitely many samples.
+For stationary response, a uniform bound $|\chi_{ij}(\omega)|\le\chi_*$ implies $|\bar\chi_{ij}|\le\chi_*$ by Parseval and Cauchy--Schwarz, but replay is usually less conservative and does not infer a uniform envelope from finitely many samples.
 
-For identical collinear pulses, the exact pair reference is
+For identical collinear pulses with $d_0<R$, the exact pair reference is
 \begin{equation}
- \Delta_g=-\frac{2Gm^2}{\hbar R^3}
- \int_0^T\frac{d(t)^2}{1-d(t)^2/R^2}\dd t.
- \label{eq:gravity}
+\Delta_g=-\frac{2Gm^2}{\hbar R^3}\int_0^T\frac{d(t)^2}{1-d(t)^2/R^2}\,dt.
+\label{eq:gravity}
 \end{equation}
 Define $H_{\rm eff}=H+1042\tau/1287$ for Eq.~\eqref{eq:pulse}. Its force norm is
 \begin{equation}
- \norm f_2^2=\frac{140m^2d_0^2}{11\tau^3}.\label{eq:forceL2}
+\norm f_2^2=\frac{140m^2d_0^2}{11\tau^3}.
+\label{eq:forcenorm}
 \end{equation}
-For reciprocal synchronized forcing, the common $\overline\chi$ gives $\Delta_m=4\overline\chi\norm f_2^2/\hbar$. Bounding the denominator in Eq.~\eqref{eq:gravity} yields the exact interval
-\begin{align}
- (1-d_0^2/R^2)\mathcal R
- \le\left|\frac{\Delta_m}{\Delta_g}\right|&\le\mathcal R,\nonumber\\
- \mathcal R&=\frac{280|\overline\chi|R^3}
- {11G\tau^3H_{\rm eff}}.
- \label{eq:scaling}
-\end{align}
-The susceptibility itself changes when the pulse changes. A nearly static stiff response gives a $\tau^{-3}$ phase ratio for a hold-dominated cycle; free translation instead gives $\tau^{-1}$. Equation~\eqref{eq:scaling} separates this mechanical dispersion from the kinematic pulse cost. There is no enhancement caused by reducing $m$ or $d_0$ alone at leading small splitting.
-
-Table~\ref{tab:targets} lists acceptance thresholds, not inferred hardware properties. The screened reference uses the published surface-force trajectory, not a fixed initial gap. The short-ramp rows use Williams's mass, spacing, and splitting with our explicit ramp and hold completion. Their holding trajectories are fixed by control, not identified with an unforced pendulum orbit. The input models and phase derivations are given in Appendix~\ref{app:gravity}.
+For reciprocal response and these identical pulses, the common $\bar\chi$ gives $\Delta_m=4\bar\chi\norm f_2^2/\hbar$. Bounding the denominator in Eq.~\eqref{eq:gravity} yields the exact interval
+\begin{equation}
+\begin{gathered}
+(1-d_0^2/R^2)\mathcal R\le\left|\frac{\Delta_m}{\Delta_g}\right|\le\mathcal R,\\
+\mathcal R=\frac{280|\bar\chi|R^3}{11G\tau^3 H_{\rm eff}}.
+\end{gathered}
+\label{eq:ratio}
+\end{equation}
+The susceptibility itself changes when the pulse changes. A nearly static stiff response gives a $\tau^{-3}$ phase ratio for a hold-dominated cycle; free translation instead gives $\tau^{-1}$. Equation~\eqref{eq:ratio} separates this mechanical dispersion from the kinematic pulse cost. There is no enhancement caused by reducing $m$ or $d_0$ alone at leading small splitting.
 
 \begin{table}[t]
-\caption{Maximum pulse-weighted cross compliance from Eq.~\eqref{eq:design} for a one-percent ideal-witness budget. Thresholds are rounded downward. The smooth pulse is a design choice in every row; the two short ramp times are not specified by Ref.~\cite{Williams}.}
-\label{tab:targets}
+\caption{Maximum pulse-weighted cross compliance from Eq.~\eqref{eq:budget} for a one-percent ideal-witness budget. Thresholds are rounded downward. The smooth pulse is a design choice in every row; the two short ramp times are not specified by Ref.~\cite{Williams}.}
+\label{tab:budget}
 \begin{ruledtabular}
 \begin{tabular}{lccc}
 Reference & $\tau$ (s) & $w_g$ & bound (m/N)\\
-\hline
-Bose~\cite{Bose} & $0.5$ & $8.981\times10^{-2}$ & $1.48\times10^{-4}$\\
-Screened~\cite{Schut} & $0.25$ & $2.375\times10^{-2}$ & $3.65\times10^{-4}$\\
-Short, $1$ ms & $0.001$ & $4.456\times10^{-6}$ & $3.69\times10^{-12}$\\
-Short, $10$ ms & $0.01$ & $4.687\times10^{-6}$ & $3.88\times10^{-9}$
+Bose \cite{Bose} & $0.5$ & $8.981\times10^{-2}$ & $1.48\times10^{-4}$\\
+Screened \cite{Schut} & $0.25$ & $2.375\times10^{-2}$ & $3.65\times10^{-4}$\\
+Short, 1 ms & $0.001$ & $4.456\times10^{-6}$ & $3.69\times10^{-12}$\\
+Short, 10 ms & $0.01$ & $4.687\times10^{-6}$ & $3.88\times10^{-9}$
 \end{tabular}
 \end{ruledtabular}
 \end{table}
 
+Table~\ref{tab:budget} lists acceptance thresholds, not inferred hardware properties. The screened reference uses the published surface-force trajectory, not a fixed initial gap. The short-ramp rows use Williams's mass, spacing, and splitting with our explicit ramp and hold completion. Their holding trajectories are fixed by control, not identified with an unforced pendulum orbit. The input models and phase derivations are given in Appendix~\ref{app:gravity}.
+
 \subsection{All-mode bounds from passive mechanics}
 A static compliance is not a uniform frequency-response bound: a lightly damped resonance can exceed it. The following finite-time estimate avoids that substitution. Assume a stationary reciprocal passive response with a real oscillator representation
 \begin{equation}
- \chi_{ij}(t)=\vartheta(t)\sum_n
- \frac{c_{ni}c_{nj}}{M_n\omega_n}\sin(\omega_nt),\qquad M_n,\omega_n>0.
- \label{eq:passive}
+\chi_{ij}(t)=\vartheta(t)\sum_n\frac{c_{ni}c_{nj}}{M_n\omega_n}\sin(\omega_nt),\qquad M_n,\omega_n>0.
+\label{eq:modes}
 \end{equation}
 A convergent positive spectral measure may replace the sum, including the loss reservoir. Let the static self compliances be finite:
 \begin{equation}
- C_i=\sum_n\frac{c_{ni}^2}{M_n\omega_n^2},\qquad
- C_{AB}=\sum_n\frac{c_{nA}c_{nB}}{M_n\omega_n^2}.
- \label{eq:staticC}
+C_i=\sum_n\frac{c_{ni}^2}{M_n\omega_n^2},\qquad
+C_{ij}=\sum_n\frac{c_{ni}c_{nj}}{M_n\omega_n^2}.
+\label{eq:compliances}
 \end{equation}
 Free zero modes must be separated before using these quantities.
 
-\begin{theorem}[Finite-time passive compliance]\label{thm:passive}
+\begin{theorem}[Finite-time passive compliance]
 For absolutely continuous compact forces with integrable derivatives,
 \begin{equation}
- |I_{ij}|\le\sqrt{C_iC_j}
- \left(\norm{f_i}_2\norm{f_j}_2+\norm{f_i}_1\norm{\dot f_j}_1\right).
- \label{eq:passivebound}
+|I_{ij}|\le\sqrt{C_iC_j}\bigl(\norm{f_i}_2\norm{f_j}_2+\norm{f_i}_1\norm{\dot f_j}_1\bigr).
+\label{eq:passive}
 \end{equation}
 If all response modes also satisfy $\omega_n\ge\omega_1>0$, and the zero-extended forces have absolutely continuous first derivatives and integrable second derivatives, then
-\begin{align}
- \left|I_{ij}-C_{ij}\int f_if_j\dd t\right|
- &\le E_{ij},\label{eq:staticerror}\\
- E_{ij}&=\frac{\sqrt{C_iC_j}}{\omega_1^2}
- \Bigl[\norm{\dot f_i}_2\norm{\dot f_j}_2\nonumber\\
- &\hspace{2.4cm}+\norm{\dot f_i}_1\norm{\ddot f_j}_1\Bigr].\nonumber
-\end{align}
+\begin{equation}
+\begin{split}
+\left|I_{ij}-C_{ij}\int f_if_j\,dt\right|&\le E_{ij},\\
+E_{ij}=\frac{\sqrt{C_iC_j}}{\omega_1^2}\bigl[&\norm{\dot f_i}_2\norm{\dot f_j}_2
++\norm{\dot f_i}_1\norm{\ddot f_j}_1\bigr].
+\end{split}
+\label{eq:gap}
+\end{equation}
 \end{theorem}
 
 The first estimate is an all-mode design certificate even when a resonance lies inside the pulse spectrum. It assumes no gap and no lower bound on damping. The second gives a controlled static approximation when a gap is known, without discarding a high-frequency pulse tail. Appendix~\ref{app:passive} proves both by integration by parts and a spectral Cauchy--Schwarz inequality. Combining either with Eq.~\eqref{eq:beta} turns a justified compliance measurement or model into a mechanical witness budget.
@@ -317,105 +320,104 @@ The first estimate is an all-mode design certificate even when a resonance lies 
 \subsection{A horizontal mounting model}
 To test whether fast-pulse sensitivity requires a freely moving kilogram, consider an explicitly clamped longitudinal elastic link. Its displacement field $u(x)$ on $0<x<\ell$ has Hamiltonian
 \begin{equation}
- H_R=\frac12\int_0^\ell
- \left[\frac{\pi(x)^2}{\varrho A}+EA(\partial_xu)^2\right]\dd x.
- \label{eq:bar}
+H_R=\frac12\int_0^\ell\left[\frac{\pi(x)^2}{\varrho A}+EA(\partial_xu)^2\right]dx.
+\label{eq:rodH}
 \end{equation}
 The endpoints obey $u(0)=u(\ell)=0$. Here $E$ is Young's modulus, $\varrho$ is mass density, $A$ is cross-sectional area, and $\pi$ is momentum per unit length. The two horizontal axial force profiles are uniform patches of width $b$, centered at $\ell/3$ and $2\ell/3$. The model is local with wave speed $c_s=\sqrt{E/\varrho}$ and first frequency $\omega_1=\pi c_s/\ell$.
 
-We choose $\ell=0.10$ m, $A=10^{-4}$ m$^2$, $b=10^{-3}$ m, and nominal density $\varrho=8000$ kg/m$^3$ as design inputs. NIST's 304-stainless modulus fit at $293$ K gives $E=199.534$ GPa~\cite{Steel}. This is a material-scale input to the ideal longitudinal model, not a measured stiffness of a fixture. The link mass is $0.080$ kg and $\omega_1/(2\pi)=24.971$ kHz. The force patches specify the attachment of the actuators, not the spacing of the test masses.
+We choose $\ell=0.10$ m, $A=10^{-4}\ {\rm m^2}$, $b=10^{-3}$ m, and nominal density $\varrho=8000\ {\rm kg/m^3}$ as design inputs. NIST's 304-stainless modulus fit at 293 K gives $E=199.534$ GPa \cite{NISTsteel}. The link mass is $0.080$ kg and $\omega_1/(2\pi)=24.971$ kHz. The force patches specify the attachment of the actuators, not the spacing of the test masses.
 
 The exact patch-averaged static Green function gives
-\begin{align}
- C_{AB}&=\frac{\ell}{9EA}=5.56854\times10^{-10}\ \mathrm{m/N},\nonumber\\
- C_A=C_B&=\frac{2\ell/9-b/6}{EA}
- =1.10536\times10^{-9}\ \mathrm{m/N}.
- \label{eq:barC}
-\end{align}
-For Eq.~\eqref{eq:bose}, the static mechanical phase is only $1.3441\times10^{-8}$ rad, with an all-mode error below $2.99\times10^{-15}$ rad. A large freely translating mass was not needed to make that long-pulse background small.
-
-For the short reference, take $m=10^{-14}$ kg, $R=100\ \mu$m, $d_0=1\ \mu$m, and $H=0.14$ s from the scales in Ref.~\cite{Williams}, but choose $\tau=1$ ms and actively held paths. Equation~\eqref{eq:staticerror} gives
 \begin{equation}
- 2.538\times10^{-5}<\Delta_m<2.838\times10^{-5}\ \mathrm{rad}.
- \label{eq:barfast}
+\begin{split}
+C_{AB}&=\frac{\ell}{9EA}=5.56854\times10^{-10}\ {\rm m/N},\\
+C_A=C_B&=\frac{2\ell/9-b/6}{EA}=1.10536\times10^{-9}\ {\rm m/N}.
+\end{split}
+\label{eq:rodC}
+\end{equation}
+For Eq.~\eqref{eq:boseinputs}, the static mechanical phase is only $1.3441\times10^{-8}$ rad, with an all-mode error below $2.99\times10^{-15}$ rad. A large freely translating mass was not needed to make that long-pulse background small.
+
+For the short reference, take $m=10^{-14}$ kg, $R=100\ \mu{\rm m}$, $d_0=1\ \mu{\rm m}$, and $H=0.14$ s from the scales in Ref.~\cite{Williams}, but choose $\tau=1$ ms and actively held paths. Equation~\eqref{eq:gap} gives
+\begin{equation}
+2.538\times10^{-5}<\Delta_m<2.838\times10^{-5}\ {\rm rad}.
+\label{eq:shortinterval}
 \end{equation}
 The pair reference is $-1.7825\times10^{-5}$ rad. The mechanical phase magnitude is therefore between $1.42$ and $1.60$ times that reference within the specified elastic model. The sign is opposite here; this is a coherent bias, not a claim that it reproduces every predicted gravitational correlator.
-
-Keeping the same link and hold but increasing the ramp to $10$ ms reduces the mechanical-to-gravitational phase ratio below $0.00144$. The corresponding bound is below one percent of the ideal witness. Figure~\ref{fig:compliance} shows the comparison as a compliance budget. The conclusion is conditional but concrete: a stiff horizontal load path can require calibration for millisecond ramps, while longer ramps can satisfy a provable material-channel bound.
 
 \begin{figure}[t]
 \centering
 \begin{tikzpicture}
-\begin{loglogaxis}[width=\columnwidth,height=5.7cm,
+\begin{loglogaxis}[width=.94\columnwidth,height=5.6cm,
  xlabel={Ramp time $\tau$ (ms)},ylabel={Compliance (m/N)},
- xmin=.7,xmax=30,ymin=8e-13,ymax=2e-7,
+ xmin=1,xmax=10,ymin=1e-12,ymax=1e-8,
  tick label style={font=\small},label style={font=\small},
- legend style={font=\footnotesize,at={(.03,.97)},anchor=north west,draw=none},
- grid=major,grid style={black!12}]
-\addplot[name path=upper,draw=none,forget plot] table[x=tau_ms,y=upper,col sep=comma]{../data/fast_design.csv};
-\addplot[name path=lower,draw=none,forget plot] table[x=tau_ms,y=lower,col sep=comma]{../data/fast_design.csv};
-\addplot[fill=black!20,draw=none,area legend] fill between[of=upper and lower];
+ xtick={1,2,5,10},xticklabels={1,2,5,10},
+ legend style={font=\scriptsize,draw=none,fill=none,at={(.03,.97)},anchor=north west},
+ legend cell align=left,minor tick num=0]
+\addplot[name path=lo,draw=none,forget plot] table[x=tau,y=lower]{compliance.dat};
+\addplot[name path=hi,draw=none,forget plot] table[x=tau,y=upper]{compliance.dat};
+\addplot[fill=black!22,draw=none] fill between[of=lo and hi];
 \addlegendentry{All-mode enclosure}
-\addplot[black,thick] table[x=tau_ms,y=cross,col sep=comma]{../data/fast_design.csv};
+\addplot[black,thick] table[x=tau,y=static]{compliance.dat};
 \addlegendentry{Static link response}
-\addplot[black,dashed,thick] table[x=tau_ms,y=target,col sep=comma]{../data/fast_design.csv};
+\addplot[black,dashed,thick] table[x=tau,y=budget]{compliance.dat};
 \addlegendentry{One-percent witness budget}
 \end{loglogaxis}
 \end{tikzpicture}
-\caption{Design comparison for $R=100\ \mu$m, $d_0=1\ \mu$m, and $H=0.14$ s. The dashed curve is the measured-compliance acceptance threshold, not an assumed mount property. The band follows Eq.~\eqref{eq:staticerror} for the specified clamped link. Once its upper edge lies below the budget, all longitudinal modes meet the mechanical bound.}
+\caption{Design comparison for $R=100\ \mu{\rm m}$, $d_0=1\ \mu{\rm m}$, and $H=0.14$ s. The dashed curve is the measured-compliance acceptance threshold, not an assumed mount property. The band follows Eq.~\eqref{eq:gap} for the specified clamped link. Once its upper edge lies below the budget, all longitudinal modes meet the mechanical bound.}
 \label{fig:compliance}
 \end{figure}
 
-\subsection{Resolve the actual load path}
-Constrained motion makes port identification especially important. In a linear pendulum model, $k=m\omega_p^2$ and a prescribed branch displacement $z d/2$ requires actuator force $z m(\ddot d+\omega_p^2d)/2$. The apparatus then receives two branch-dependent loads,
-\begin{equation}
- f_{\rm act}=-\frac m2(\ddot d+\omega_p^2d),\qquad
- f_{\rm anchor}=\frac m2\omega_p^2d.
- \label{eq:loads}
-\end{equation}
-Their sum is the inertial reaction $-m\ddot d/2$. Their mechanical work is not determined by that sum unless they act on the same displacement coordinate. Separated actuator and anchor motion requires the vector version of Eq.~\eqref{eq:I}, including their cross responses. Appendix~\ref{app:passive} derives this statement and its coordinate invariance.
+Keeping the same link and hold but increasing the ramp to $10$ ms reduces the mechanical-to-gravitational phase ratio below $0.00144$. The corresponding bound is below one percent of the ideal witness. Figure~\ref{fig:compliance} shows the comparison as a compliance budget. A stiff horizontal load path can therefore require calibration for millisecond ramps, while longer ramps can satisfy a provable material-channel bound.
 
-Williams's example uses $0.5$ m nanotube pendula and assumes independent supports; it supplies neither a complete reaction-force transfer matrix nor a ramp waveform~\cite{Williams}. Accordingly, Eqs.~\eqref{eq:barfast} and \eqref{eq:loads} are a specified shared-mount completion and a calibration prescription, not a measured percentage for that proposal. Mechanical independence, when established as $\chi_{AB}=\chi_{BA}=0$ for every retained load component, is an exact null. A finite residual is handled by Eq.~\eqref{eq:cal}.
+\subsection{Resolve the actual load path}
+Constrained motion makes port identification especially important. In a linear pendulum model, $k=m\omega_p^2$ and a prescribed branch displacement $zd/2$ requires actuator force $zm(\ddot d+\omega_p^2d)/2$. The apparatus then receives two branch-dependent loads,
+\begin{equation}
+f_{\rm act}=-\frac m2(\ddot d+\omega_p^2d),\qquad
+f_{\rm anchor}=\frac m2\omega_p^2d.
+\label{eq:loads}
+\end{equation}
+Their sum is the inertial reaction $-m\ddot d/2$. Their mechanical work is not determined by that sum unless they act on the same displacement coordinate. Separated actuator and anchor motion requires the vector version of Eq.~\eqref{eq:actions}, including their cross responses. Appendix~\ref{app:passive} derives this statement and its coordinate invariance.
+
+Williams's example uses $0.5$ m nanotube pendula and assumes independent supports; it supplies neither a complete reaction-force transfer matrix nor a ramp waveform \cite{Williams}. Accordingly, Eqs.~\eqref{eq:shortinterval} and \eqref{eq:loads} are a specified shared-mount completion and a calibration prescription, not a measured percentage for that proposal. Mechanical independence, when established as $\chi_{AB}=\chi_{BA}=0$ for every retained load component, is an exact null. A finite residual is handled by Eq.~\eqref{eq:calerror}.
 
 \section{Discussion}
 The source of concern is work done through a common quantum material response. Closing its trajectory does not remove the accumulated phase. Conversely, a sufficiently small pair of measured cross actions excludes a large mechanical entangling channel without requiring a mechanical visibility estimate. A complete two-response null removes that channel by local controls. These statements give a sharper experimental criterion than replacing a platform by a free mass or by the mass of the Earth.
 
-The new design information is the finite-time compliance budget. Its passive version includes all response modes and does not assume that static stiffness bounds resonant amplification. Its gapped version makes the short-pulse elastic example controlled. The $\tau^{-3}$ stiff-response scaling explains why an apparatus adequate for a long interferometer may require a new calibration after the ramp is shortened. It does not establish that all constrained or small-splitting proposals are contaminated. A port-resolved load and susceptibility are needed to make that attribution.
+The new design information is the finite-time compliance budget. Its passive version includes all response modes and does not assume that static stiffness bounds resonant amplification. Its gapped version makes the short-pulse elastic example controlled. The $\tau^{-3}$ stiff-response scaling explains why an apparatus adequate for a long interferometer may require a new calibration after the ramp is shortened.
 
-There are several distinct limitations. The channel theorem assumes prescribed nondemolition forces, a quadratic Gaussian reservoir, and initial record--reservoir independence; nonlinear control, autonomous actuator dynamics, and an unmodeled feedback path require separate bounds. The clamped link excludes bending, finite clamp compliance, and other load paths, all of which belong in a real replay measurement. Its geometry and density, the short ramps, and the replay accuracy are declared design choices. The modulus is a nominal material fit, not a certified sample value. Coherent phase estimates alone do not predict observable entanglement: for example, the specified $293$ K link with the $1$ ms pulse has calculated $\tr V\simeq1.27\times10^{-3}$, sufficient to mask a much smaller ideal witness; the covariance calculation and its mode-tail bound are in Appendix~\ref{app:numeric}. Gravitational reference phases use prescribed Newtonian test-pair paths. Full apparatus gravity, controller stress, wave-packet dynamics, electromagnetic interactions, and detection errors remain separate budgets. None is set to zero by the mechanical certificate.
+The channel theorem assumes prescribed nondemolition forces, quadratic dynamics, and an initially Gaussian mechanical environment independent of the records. Branch-dependent stiffness, nonlinear control, autonomous actuator dynamics, and an unmodeled feedback path require separate bounds. The clamped link excludes bending, finite clamp compliance, and other load paths, all of which belong in a real replay measurement. Its geometry and density, the short ramps, and the replay accuracy are declared design choices; the modulus is a nominal material fit, not a certified sample value. A port-resolved load and susceptibility are needed to attribute a mechanical background to an actual instrument.
 
-The distinction from previous work is correspondingly narrow. Reversible preparation recoil~\cite{Celeri}, gravity-induced apparatus decoherence~\cite{Gunnink}, closed motional gates~\cite{MS}, and quantum cross-spectrum reconstruction~\cite{PazSilva} are established ingredients. The present bound retains the two directed actions as an operational channel-distance budget, and supplies classical replay, local nulling, and passive compliance estimates for that budget. Published vertical-heave data~\cite{Hermsdorf} can motivate a numerical damping example but do not determine a horizontal cross response. We therefore do not use them to rank proposal families.
+Coherent phase estimates alone do not predict observable entanglement. For example, the specified 293 K link with the 1 ms pulse has calculated $\tr V\simeq1.27\times10^{-3}$, which prevents the witness used here from detecting the much smaller coherent signal. Appendix~\ref{app:numerics} gives the covariance calculation and its mode-tail bound. Gravitational reference phases use prescribed Newtonian test-pair paths. Full apparatus gravity, controller stress, wave-packet dynamics, electromagnetic interactions, and detection errors remain separate budgets. None is set to zero by the mechanical certificate.
 
-Finally, mechanical calibration does not depend on a gravitational gauge choice. It is defined by physical work and displacement. The complete Newtonian source has its own mixed branch terms when a recoil body is shared; Appendix~\ref{app:gravity} retains them and shows the cancellation of spurious support self-phases. For a conserved relativistic completion the usual gravitational Ward identity remains valid~\cite{DSW,Christodoulou}. Neither that identity nor a local gravitational description eliminates an additional material mediator. The experimental task is to bound both, rather than infer the absence of one from the coherent return of the other.
+The distinction from previous work is correspondingly narrow. Reversible preparation recoil \cite{Celeri}, gravity-induced apparatus decoherence \cite{Gunnink}, branch-dependent screening-plate motion \cite{Kamp}, closed motional gates \cite{Molmer}, and quantum cross-spectrum reconstruction \cite{PazSilva} are established ingredients. The present bound retains the two directed actions as an operational channel-distance budget, and supplies classical replay, local nulling, and passive compliance estimates for that budget. Published vertical-heave data \cite{Hermsdorf} can motivate a numerical damping example but do not determine a horizontal cross response. We therefore do not use them to rank proposal families.
+
+Finally, mechanical calibration does not depend on a gravitational gauge choice. It is defined by physical work and displacement. The complete Newtonian source has its own mixed branch terms when a recoil body is shared; Appendix~\ref{app:gravity} retains them and shows the cancellation of spurious support self-phases. For a conserved relativistic completion the usual gravitational Ward identity remains valid \cite{Danielson,Christodoulou}. Neither that identity nor a local gravitational description eliminates an additional material mediator. The experimental task is to bound both, rather than infer the absence of one from the coherent return of the other.
 
 \begin{acknowledgments}
-GPT-6 Astra Pro (OpenAI) assisted with derivations, literature analysis, numerical code, and manuscript preparation.
+GPT-6 Astra Pro (OpenAI) assisted with calculations and manuscript preparation.
 \end{acknowledgments}
 \section*{Data availability}
 The accompanying archive contains the complete \LaTeX\ source, calculation code, figure data, and tests. No experimental data were collected.
+
 \appendix
 \input{appendices}
-\makeatletter
-\let\auto@bib\@empty
-\let\auto@bib@innerbib\@empty
-\makeatother
+
 \begin{thebibliography}{99}
-\raggedright
-\rightskip=8pt plus 2em
-\bibitem{Bose} S. Bose, A. Mazumdar, G. W. Morley, H. Ulbricht, M. Toro\v{s}, M. Paternostro, A. Geraci, P. Barker, M. S. Kim, and G. Milburn, Spin entanglement witness for quantum gravity, Phys. Rev. Lett. \textbf{119}, 240401 (2017), arXiv:1707.06050.
-\bibitem{MV} C. Marletto and V. Vedral, Gravitationally induced entanglement between two massive particles is sufficient evidence of quantum effects in gravity, Phys. Rev. Lett. \textbf{119}, 240402 (2017), arXiv:1707.06036.
-\bibitem{DSW} D. L. Danielson, G. Satishchandran, and R. M. Wald, Gravitationally mediated entanglement: Newtonian field vs. gravitons, Phys. Rev. D \textbf{105}, 086001 (2022), arXiv:2112.10798v3.
-\bibitem{Celeri} L. C. C\'eleri, D. O. Soares-Pinto, and D. A. Turolla Vanzella, The apparatus strikes back: Momentum conservation and the cost of spatial superpositions, arXiv:2607.08819v2 (2026).
-\bibitem{Gunnink} F. Gunnink, A. Mazumdar, M. Schut, and M. Toro\v{s}, Gravitational decoherence by the apparatus in the quantum-gravity induced entanglement of masses, Classical Quantum Gravity \textbf{40}, 235006 (2023), arXiv:2210.16919v2.
-\bibitem{Kamp} T. W. van de Kamp, R. J. Marshman, S. Bose, and A. Mazumdar, Quantum gravity witness via entanglement of masses: Casimir screening, Phys. Rev. A \textbf{102}, 062807 (2020), arXiv:2006.06931v2.
-\bibitem{Schut} M. Schut, A. Grinin, A. Dana, S. Bose, A. A. Geraci, and A. Mazumdar, Relaxation of experimental parameters in a quantum-gravity-induced entanglement of masses protocol using electromagnetic screening, Phys. Rev. Research \textbf{5}, 043170 (2023), arXiv:2307.07536v2.
-\bibitem{Williams} H. Williams, Gravity-induced entanglement under constrained dynamics, Phys. Rev. A \textbf{114}, 032221 (2026), arXiv:2605.00967v2.
-\bibitem{MS} K. M\o lmer and A. S\o rensen, Multiparticle entanglement of hot trapped ions, Phys. Rev. Lett. \textbf{82}, 1835 (1999), arXiv:quant-ph/9810040v2.
-\bibitem{PazSilva} G. A. Paz-Silva, L. M. Norris, and L. Viola, Multiqubit spectroscopy of Gaussian quantum noise, Phys. Rev. A \textbf{95}, 022121 (2017), arXiv:1609.01792v2.
-\bibitem{ZARM} ZARM, \emph{Drop Tower Bremen User Manual}, Sec.~2.4.1 and Table~1, ESA-hosted edition, \href{https://esamultimedia.esa.int/docs/edu/Forms_Letters/DYT/ZARM_Users_Manual_0611.pdf}{ESA-hosted manual} (accessed October 3, 2026).
-\bibitem{Steel} National Institute of Standards and Technology, \emph{Material Properties: 304 Stainless (UNS S30400)}, Young's-modulus fit for $57$--$293$ K, \href{https://trc.nist.gov/cryogenics/materials/304Stainless/304Stainless_rev.htm}{NIST Cryogenic Materials Database} (accessed October 3, 2026).
-\bibitem{Hermsdorf} G. L. Hermsdorf, S. A. Szilagyi, S. R\"osch, and E. Sch\"affer, High performance passive vibration isolation system for optical tables using six-degree-of-freedom viscous damping combined with steel springs, Rev. Sci. Instrum. \textbf{90}, 015113 (2019), doi:10.1063/1.5060707, arXiv:1810.06641v4.
-\bibitem{Christodoulou} M. Christodoulou, A. Di Biagio, M. Aspelmeyer, \v{C}. Brukner, C. Rovelli, and R. Howl, Locally mediated entanglement in linearised quantum gravity, Phys. Rev. Lett. \textbf{130}, 100202 (2023), arXiv:2202.03368v2.
-\bibitem{NIST} National Institute of Standards and Technology, \emph{2022 CODATA Recommended Values of the Fundamental Physical Constants}, \href{https://physics.nist.gov/cuu/Constants/Table/allascii.txt}{NIST constants table} (accessed October 3, 2026).
+\bibitem{Bose} S. Bose, A. Mazumdar, G. W. Morley, H. Ulbricht, M. Toro\v{s}, M. Paternostro, A. A. Geraci, P. F. Barker, M. S. Kim, and G. Milburn, Spin entanglement witness for quantum gravity, Phys. Rev. Lett. \textbf{119}, 240401 (2017), \href{https://arxiv.org/abs/1707.06050}{arXiv:1707.06050}.
+\bibitem{Marletto} C. Marletto and V. Vedral, Gravitationally induced entanglement between two massive particles is sufficient evidence of quantum effects in gravity, Phys. Rev. Lett. \textbf{119}, 240402 (2017), \href{https://arxiv.org/abs/1707.06036}{arXiv:1707.06036}.
+\bibitem{Danielson} D. L. Danielson, G. Satishchandran, and R. M. Wald, Gravitationally mediated entanglement: Newtonian field vs. gravitons, Phys. Rev. D \textbf{105}, 086001 (2022), \href{https://arxiv.org/abs/2112.10798v3}{arXiv:2112.10798v3}.
+\bibitem{Celeri} L. C. C\'eleri, D. O. Soares-Pinto, and D. A. Turolla Vanzella, The apparatus strikes back: Momentum conservation and the cost of spatial superpositions, \href{https://arxiv.org/abs/2607.08819v2}{arXiv:2607.08819v2} (2026).
+\bibitem{Gunnink} F. Gunnink, A. Mazumdar, M. Schut, and M. Toro\v{s}, Gravitational decoherence by the apparatus in the quantum-gravity induced entanglement of masses, Classical Quantum Gravity \textbf{40}, 235006 (2023), \href{https://arxiv.org/abs/2210.16919v2}{arXiv:2210.16919v2}.
+\bibitem{Kamp} T. W. van de Kamp, R. J. Marshman, S. Bose, and A. Mazumdar, Quantum gravity witness via entanglement of masses: Casimir screening, Phys. Rev. A \textbf{102}, 062807 (2020), \href{https://arxiv.org/abs/2006.06931v2}{arXiv:2006.06931v2}.
+\bibitem{Schut} M. Schut, A. Grinin, A. Dana, S. Bose, A. A. Geraci, and A. Mazumdar, Relaxation of experimental parameters in a quantum-gravity-induced entanglement of masses protocol using electromagnetic screening, Phys. Rev. Research \textbf{5}, 043170 (2023), \href{https://arxiv.org/abs/2307.07536v2}{arXiv:2307.07536v2}.
+\bibitem{Williams} H. Williams, Gravity-induced entanglement under constrained dynamics, Phys. Rev. A \textbf{114}, 032221 (2026), \href{https://arxiv.org/abs/2605.00967v2}{arXiv:2605.00967v2}.
+\bibitem{Elahi} S. G. Elahi, M. Schut, A. Dana, A. Grinin, S. Bose, A. Mazumdar, and A. Geraci, Diamagnetic microchip traps for levitated nanoparticle entanglement experiments, Phys. Rev. A \textbf{112}, 063508 (2025), \href{https://doi.org/10.1103/qdyh-rbyq}{doi:10.1103/qdyh-rbyq}, \href{https://arxiv.org/abs/2411.02325v2}{arXiv:2411.02325v2}.
+\bibitem{Molmer} K. M\o lmer and A. S\o rensen, Multiparticle entanglement of hot trapped ions, Phys. Rev. Lett. \textbf{82}, 1835 (1999), \href{https://arxiv.org/abs/quant-ph/9810040v2}{arXiv:quant-ph/9810040v2}.
+\bibitem{PazSilva} G. A. Paz-Silva, L. M. Norris, and L. Viola, Multiqubit spectroscopy of Gaussian quantum noise, Phys. Rev. A \textbf{95}, 022121 (2017), \href{https://arxiv.org/abs/1609.01792v2}{arXiv:1609.01792v2}.
+\bibitem{NISTsteel} National Institute of Standards and Technology, \href{https://trc.nist.gov/cryogenics/materials/304Stainless/304Stainless_rev.htm}{Material Properties: 304 Stainless (UNS S30400)}, Young's-modulus fit for 57--293 K, NIST Cryogenic Materials Database (accessed October 3, 2026).
+\bibitem{Hermsdorf} G. L. Hermsdorf, S. A. Szilagyi, S. R\"osch, and E. Sch\"affer, High performance passive vibration isolation system for optical tables using six-degree-of-freedom viscous damping combined with steel springs, Rev. Sci. Instrum. \textbf{90}, 015113 (2019), \href{https://doi.org/10.1063/1.5060707}{doi:10.1063/1.5060707}, \href{https://arxiv.org/abs/1810.06641v4}{arXiv:1810.06641v4}.
+\bibitem{Christodoulou} M. Christodoulou, A. Di Biagio, M. Aspelmeyer, \v{C}. Brukner, C. Rovelli, and R. Howl, Locally mediated entanglement in linearised quantum gravity, Phys. Rev. Lett. \textbf{130}, 100202 (2023), \href{https://arxiv.org/abs/2202.03368v2}{arXiv:2202.03368v2}.
+\bibitem{CODATA} National Institute of Standards and Technology, \href{https://physics.nist.gov/cuu/Constants/Table/allascii.txt}{2022 CODATA Recommended Values of the Fundamental Physical Constants}, NIST constants table (accessed October 3, 2026).
 \end{thebibliography}
 \end{document}

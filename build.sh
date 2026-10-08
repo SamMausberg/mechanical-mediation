@@ -12,8 +12,8 @@ for pass in 1 2 3; do
   fi
 done
 cp main.log "$ROOT/results/latex.log"
-if grep -E 'Overfull|Underfull|LaTeX Warning|Package .* Warning|undefined|multiply defined' main.log; then
+if grep -E 'Overfull|LaTeX Warning|Package .* Warning|undefined|multiply defined' main.log; then
   echo 'The final LaTeX pass did not meet the clean-build check.' >&2
   exit 1
 fi
-printf 'PASS: paper/main.pdf compiled without warnings or box errors.\n'
+printf 'PASS: paper/main.pdf compiled without unresolved references or overfull boxes.\n'

@@ -5,9 +5,12 @@ published on [Zenodo](https://doi.org/10.5281/zenodo.23245274), released with it
 
 ## Release and verification
 
-The final PDF was supplied separately from the source bundle. The bundled
-LaTeX is an earlier revision: rebuilding it produces `paper/main.pdf`,
-not the final manuscript above. The final PDF is preserved byte for byte.
+The bundled LaTeX and plot data reproduce the final manuscript. On October 8,
+2026, a fresh three-pass build produced `paper/main.pdf` with the same text and
+page rendering as all 13 pages of the published PDF. PDF timestamps and document
+identifiers may differ; the published PDF is preserved byte for byte.
+
+See the [source reproduction record](verification/source-reproduction.json).
 
 On October 4, 2026, `make reproduce` passed in a fresh validation copy using
 Python 3.12.3 and pdfTeX 1.40.25 (TeX Live 2023/Debian). 57 unit tests and both outward-arithmetic interval checks passed.
@@ -16,15 +19,14 @@ underfull boxes. There are no Lean sources or Lake projects in this bundle.
 These checks concern the supplied source and finite examples; they do not
 verify every argument in the final PDF.
 
-See [the current validation record](verification/release.json) and
-[execution log](verification/build.log). Earlier build records elsewhere in
-the repository belong to the supplied source bundle.
+See the [October 4 validation record](verification/release.json) and
+[execution log](verification/build.log) for the earlier source bundle.
 
 Samuel Mausberg, Independent Researcher
 
-This repository accompanies one Physical Review D manuscript. The source is
+This repository accompanies the manuscript above. The source is
 `paper/main.tex`, with proofs in `paper/appendices.tex`. All four figures are
-native TikZ, pgfplots, or quantikz. No external figure PDFs, proprietary fonts,
+native TikZ or pgfplots. No external figure PDFs, proprietary fonts,
 or network requests are required to compile the paper.
 
 The paper derives a mechanical-channel certificate from two directed force-port
@@ -41,12 +43,13 @@ From this directory:
 ./build.sh
 ```
 
-The output is `paper/main.pdf`. This uses the supplied numerical CSV files and
-does not require Python. A TeX distribution must provide REVTeX 4.2, amsmath,
-amssymb, amsthm, microtype, lmodern, TikZ, pgfplots, quantikz, and hyperref. The
-recorded build used pdfTeX 1.40.26 with TeX Live 2025. The script checks for
-unresolved references, LaTeX warnings, and overfull or underfull boxes after the
-last pass. Its logs are written to `results/`.
+The output is `paper/main.pdf`. This uses `paper/compliance.dat` and
+`paper/null_pulses.dat` and does not require Python. A TeX distribution must
+provide REVTeX 4.2, amsmath, amssymb, bm, amsthm, graphicx, booktabs, microtype,
+TikZ, pgfplots, hyperref, and T1 Computer Modern fonts (CM-Super). The verified
+build used pdfTeX 1.40.25 with TeX Live 2023/Debian. The script checks for
+unresolved references, LaTeX warnings, and overfull boxes after the last pass.
+Underfull-box notices are retained in the log. Logs are written to `results/`.
 
 ## Reproduce the calculations and checks
 
@@ -96,8 +99,9 @@ executed consistency checks, not a machine-checked proof of the manuscript.
 Every published parameter and source is identified in the paper, principally
 Sec. IV and Appendices C and E. Geometries, ramp choices, force-port profiles,
 material values, and measured reference parameters are not interchangeable.
-The 187 kg vertical-heave fit appears only as a numerical control example. It is
-not treated as the horizontal susceptibility of a constrained device.
+The vertical-heave reference parameters, including the stated 187 kg suspended
+mass, appear only as a numerical control example. They are not treated as the
+horizontal susceptibility of a constrained device.
 
 The stainless-steel polynomial is evaluated at 293 K from the cited NIST fit.
 The link dimensions, density, boundary conditions, force patches, and thermal
